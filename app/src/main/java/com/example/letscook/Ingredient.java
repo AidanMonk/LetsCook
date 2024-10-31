@@ -1,109 +1,33 @@
 package com.example.letscook;
 
-public enum Ingredient {
-    Salt,
-    Sugar,
-    OliveOil,
-    Butter,
-    Garlic,
-    Onion,
-    Tomato,
-    Basil,
-    BlackPepper,
-    ChickenBreast,
-    Beef,
-    Pork,
-    Salmon,
-    Shrimp,
-    Milk,
-    Eggs,
-    Flour,
-    Rice,
-    Pasta,
-    Bread,
-    Potatoes,
-    Carrots,
-    Broccoli,
-    Spinach,
-    Cheese,
-    Yogurt,
-    Honey,
-    Lemon,
-    Lime,
-    Apple,
-    Banana,
-    Orange,
-    Strawberry,
-    Blueberry,
-    Raspberry,
-    Grapes,
-    Almonds,
-    Walnuts,
-    PeanutButter,
-    Oats,
-    Cinnamon,
-    Ginger,
-    Parsley,
-    Thyme,
-    Rosemary,
-    Dill,
-    Paprika,
-    Cumin,
-    Coriander,
-    Turmeric,
-    ChiliPowder,
-    SoySauce,
-    Vinegar,
-    Mustard,
-    Ketchup,
-    Mayonnaise,
-    CoconutOil,
-    SesameOil,
-    Corn,
-    GreenBeans,
-    Lettuce,
-    Cabbage,
-    Cucumber,
-    Zucchini,
-    Eggplant,
-    Mushrooms,
-    Cauliflower,
-    BellPepper,
-    Jalapeno,
-    Celery,
-    Leek,
-    Avocado,
-    Pineapple,
-    Mango,
-    Peach,
-    Pear,
-    Plum,
-    Cherry,
-    Watermelon,
-    FetaCheese,
-    Mozzarella,
-    Parmesan,
-    Bacon,
-    Sausage,
-    Tofu,
-    Lentils,
-    Chickpeas,
-    BlackBeans,
-    KidneyBeans,
-    WhiteBeans,
-    Quinoa,
-    Bulgur,
-    Couscous,
-    BrownRice,
-    Barley,
-    SunflowerSeeds,
-    ChiaSeeds,
-    Flaxseeds,
-    Chocolate,
-    VanillaExtract,
-    BakingPowder,
-    BakingSoda,
-    Yeast,
-    Cornstarch,
-    MapleSyrup
+//Ingredient class defines a simple ingredient, plan to initialize these ingredient objects from the database
+public class Ingredient{
+    private String name;
+    private IngredientCategory category;
+    //image?
+
+    public Ingredient(String name, IngredientCategory category){
+        this.name = name;
+        this.category = category;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public IngredientCategory getCategory() {
+        return category;
+    }
+
+    public void setCategory(IngredientCategory category) {
+        this.category = category;
+    }
+
+
+
+
 }

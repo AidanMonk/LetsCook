@@ -2,13 +2,20 @@ package com.example.letscook;
 
 import java.util.List;
 
-//defines a single whole recipe
+//Recipe class defines a single recipe including ingredients, steps, and recipe image
 public class Recipe {
     private String name;
-    //make author a user object later
     private String author;
     private String description;
-    //add image parameter later
+    //add image parameter, tbd how we will store these
     private List<RecipeIngredient> ingredients;
     private List<String> steps;
+
+    public Recipe(String name, String author, String description, List<RecipeIngredient> ingredients, List<String> steps){
+        this.name = name;
+        this.author = author;
+        this.description = description;
+        this.ingredients = ingredients;
+        this.steps = steps;
+    }
 }
