@@ -18,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
+    //hello yunxian
     TextView userPasswordTV, userAgeTV;
     EditText userNameET, passwordET, ageET, getUserET;
     Button submitBtn, retrieveBtn;
