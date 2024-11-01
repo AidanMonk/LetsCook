@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
         recipeSteps.add("mix");
         recipeSteps.add("enjoy");
 
+        //completed single recipe ex:
         Recipe recipe = new Recipe("bag o powder", "fred frickerton", "you're going to need a glass of water after this one", recipeIngredients, recipeSteps);
 
     }
