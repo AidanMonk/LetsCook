@@ -26,8 +26,4 @@ public class Ingredient{
     public void setCategory(IngredientCategory category) {
         this.category = category;
     }
-
-
-
-
 }

@@ -37,7 +37,16 @@ public class RecipeIngredient {
     }
 
     public String toString() {
-        //ex: "1 cup of flour"
-        return quantity + " " + measurement + " of " + ingredient;
+
+        if (quantity <= 1){
+            return quantity + " " + measurement + " of " + ingredient.getName();
+        }
+        else{
+            return quantity + " " + measurement + "s of " + ingredient.getName();
+        }
+
+
     }
+
+
 }
