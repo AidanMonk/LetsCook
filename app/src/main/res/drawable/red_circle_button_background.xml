@@ -1,0 +1,5 @@
+<!-- res/drawable/close_button_background.xml -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="@color/red" /> <!-- Change color as desired -->
+    <corners android:radius="13dp" /> <!-- Half of width/height for a circular shape -->
+</shape>

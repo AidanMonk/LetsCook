@@ -18,10 +18,10 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText recipeNameET, recipeDescET, quantityET, ingredientET;
-    Button addIngredientBtn;
+    EditText recipeNameET, recipeDescET, quantityET, ingredientET, enterStepET;
+    Button addIngredientBtn, addStepBtn, addRecipeBtn;
     Spinner measurementSpinner;
-    RecyclerView ingredientsRecyclerView;
+    RecyclerView ingredientsRecyclerView, stepsRecyclerView;
 
     FirebaseDatabase db;
     DatabaseReference ref;
@@ -32,22 +32,25 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
+        enterStepET = findViewById(R.id.enterStepET);
         recipeNameET = findViewById(R.id.recipeNameET);
         recipeDescET = findViewById(R.id.recipeDescET);
         quantityET = findViewById(R.id.quantityET);
         measurementSpinner = findViewById(R.id.measurementSpinner);
         ingredientET = findViewById(R.id.ingredientET);
         addIngredientBtn = findViewById(R.id.addIngredientBtn);
-        //populate spinner
+        addStepBtn = findViewById(R.id.addStepBtn);
+        ingredientsRecyclerView = findViewById(R.id.recipeIngredientsRV);
+        stepsRecyclerView = findViewById(R.id.recipeStepsRV);
+        addRecipeBtn = findViewById(R.id.addRecipeBtn);
+
+        //populate spinner with measurements
         measurementSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Measurement.getMeasurementStrings()));
 
         List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
         RecipeIngredientAdapter recipeIngredientAdapter = new RecipeIngredientAdapter(this, recipeIngredients);
-        ingredientsRecyclerView = findViewById(R.id.recipeIngredientsRV);
         ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ingredientsRecyclerView.setAdapter(recipeIngredientAdapter);
-
         ingredientsRecyclerView.setAdapter(recipeIngredientAdapter);
 
         //add ingredient button
@@ -68,32 +71,45 @@ public class MainActivity extends AppCompatActivity {
             ingredientET.setText("");
         });
 
+        List<String> recipeSteps = new ArrayList<>();
 
+        RecipeStepsAdapter recipeStepsAdapter = new RecipeStepsAdapter(this, recipeSteps);
+        stepsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        stepsRecyclerView.setAdapter(recipeStepsAdapter);
 
-        //testing Recipe
+        addStepBtn.setOnClickListener(v -> {
+            recipeSteps.add(enterStepET.getText().toString());
+            recipeStepsAdapter.notifyItemInserted(recipeSteps.size() - 1);
+            enterStepET.setText("");
+        });
 
-//        //initialize ingredients
-//        Map<String,Ingredient> ingredients = initializeIngredients();
-//
-//        //initialize ingredient quantities
-//        List<RecipeIngredient> recipeIngredients = new ArrayList<>();
-//        recipeIngredients.add(new RecipeIngredient(ingredients.get("flour"), 2, Measurement.Cups));
-//        recipeIngredients.add(new RecipeIngredient(ingredients.get("sugar"), 1, Measurement.Tablespoons));
-//        recipeIngredients.add(new RecipeIngredient(ingredients.get("salt"), 1, Measurement.Teaspoons));
-//
-//        //initialize recipe steps
-//        List<String> recipeSteps = new ArrayList<>();
-//        recipeSteps.add("add flour, sugar, and salt to a bowl");
-//        recipeSteps.add("mix");
-//        recipeSteps.add("enjoy");
-//
-//        //completed single recipe ex:
-//        Recipe recipe = new Recipe("bag o powder", "fred frickerton", "you're going to need a glass of water after this one", recipeIngredients, recipeSteps);
-//
-//        //add recipe to DB:
-//        db = FirebaseDatabase.getInstance();
-//        ref = db.getReference();
-//        ref.child("recipes").child(recipe.getName()).setValue(recipe);
+        addRecipeBtn.setOnClickListener(v -> {
+            //using dummy user for now
+            Recipe newrecipe = new Recipe(recipeNameET.getText().toString(), "dummy user", recipeDescET.getText().toString(), recipeIngredients, recipeSteps);
+
+            //add recipe to DB:
+            db = FirebaseDatabase.getInstance();
+            ref = db.getReference();
+            ref.child("recipes").child(newrecipe.getName()).setValue(newrecipe);
+
+            Toast.makeText(this, "Recipe added!", Toast.LENGTH_SHORT).show();
+
+            //clear fields:
+            ClearRecipeFields();
+            recipeSteps.clear();
+            recipeIngredients.clear();
+            recipeStepsAdapter.notifyDataSetChanged();
+            recipeIngredientAdapter.notifyDataSetChanged();
+        });
+    }
+
+    private void ClearRecipeFields() {
+        recipeNameET.setText("");
+        recipeDescET.setText("");
+        quantityET.setText("");
+        ingredientET.setText("");
+        enterStepET.setText("");
+        measurementSpinner.setSelection(0);
     }
 
     //temp class for testing, will want to initialize ingredients from a table in the database

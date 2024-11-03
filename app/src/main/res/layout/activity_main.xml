@@ -1,24 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingLeft="16dp"
-    android:paddingRight="16dp"
-    android:orientation="vertical" >
+    android:layout_height="match_parent">
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enter Recipe"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:gravity="center"
-        android:padding="20dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Recipe name:" />
+            android:gravity="center"
+            android:padding="20dp"
+            android:text="Enter Recipe"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Recipe name:"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/recipeNameET"
             android:layout_width="match_parent"
@@ -28,42 +34,60 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Description:" />
+            android:layout_marginBottom="10dp"
+            android:text="Description:"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/recipeDescET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="Ingredients:"
-            android:layout_marginBottom="10dp"/>
+            android:textStyle="bold" />
 
         <!-- recipe ingredients -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recipeIngredientsRV"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" />
 
         <!-- ingredient input -->
-        <LinearLayout
-            android:orientation="horizontal"
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ingredient (this will be  a search in the database in the future, for now allow any string)"/>
+
+        <EditText
+            android:id="@+id/ingredientET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content" />
+
+        <!-- measurement input -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
             <!-- quantity-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:layout_margin="5dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="quantity"/>
+                    android:text="quantity" />
+
                 <EditText
                     android:id="@+id/quantityET"
                     android:layout_width="match_parent"
@@ -74,46 +98,58 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
+                android:layout_margin="5dp"
                 android:layout_weight="1"
-                android:layout_margin="5dp">
+                android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="measurement"/>
+                    android:text="measurement" />
 
                 <Spinner
                     android:id="@+id/measurementSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp"/>
+                    android:layout_height="45dp" />
 
             </LinearLayout>
-
-            <!-- ingredient-->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_weight="2"
-                android:layout_margin="5dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ingredient"/>
-                <EditText
-                    android:id="@+id/ingredientET"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </LinearLayout>
-
         </LinearLayout>
 
         <Button
             android:id="@+id/addIngredientBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="add ingredient"/>
+            android:text="add ingredient" />
 
-</LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Steps:"
+            android:textStyle="bold"
+            android:layout_marginVertical="10dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recipeStepsRV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/enterStepET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:id="@+id/addStepBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add step" />
+
+        <Button
+            android:id="@+id/addRecipeBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add recipe"
+            android:layout_gravity="center" />
+
+    </LinearLayout>
+</ScrollView>
