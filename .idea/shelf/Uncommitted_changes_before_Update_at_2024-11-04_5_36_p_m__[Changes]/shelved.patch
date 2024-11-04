@@ -1,0 +1,436 @@
+Index: app/src/main/java/com/example/letscook/RecipeIngredientAdapter.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.letscook;\r\n\r\nimport android.content.Context;\r\nimport android.view.LayoutInflater;\r\nimport android.view.View;\r\nimport android.view.ViewGroup;\r\nimport android.widget.Button;\r\nimport android.widget.TextView;\r\n\r\nimport androidx.annotation.NonNull;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport java.util.List;\r\n\r\npublic class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredientAdapter.RecipeIngredientViewHolder> {\r\n    Context context;\r\n    List<RecipeIngredient> recipeIngredients;\r\n\r\n    public RecipeIngredientAdapter(Context context, List<RecipeIngredient> recipeIngredients) {\r\n        this.context = context;\r\n        this.recipeIngredients = recipeIngredients;\r\n    }\r\n\r\n    @NonNull\r\n    @Override\r\n    public RecipeIngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {\r\n        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_ingredient_input, parent, false);\r\n\r\n        return new RecipeIngredientViewHolder(view);\r\n    }\r\n\r\n    @Override\r\n    public void onBindViewHolder(@NonNull RecipeIngredientViewHolder holder, int position) {\r\n        holder.recipeIngredientTV.setText(\" • \" + recipeIngredients.get(position).toString());\r\n    }\r\n\r\n    @Override\r\n    public int getItemCount() {\r\n        return recipeIngredients.size();\r\n    }\r\n\r\n    public class RecipeIngredientViewHolder extends RecyclerView.ViewHolder {\r\n        Button removeIngredientBtn;\r\n        TextView recipeIngredientTV;\r\n\r\n        public RecipeIngredientViewHolder(@NonNull View itemView) {\r\n            super(itemView);\r\n\r\n            removeIngredientBtn = itemView.findViewById(R.id.removeIngredientBtn);\r\n            recipeIngredientTV = itemView.findViewById(R.id.recipeIngredientTV);\r\n\r\n            removeIngredientBtn.setOnClickListener(new View.OnClickListener() {\r\n                @Override\r\n                public void onClick(View v) {\r\n                    recipeIngredients.remove(getAdapterPosition());\r\n                    notifyItemRemoved(getAdapterPosition());\r\n                }\r\n            });\r\n        }\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/letscook/RecipeIngredientAdapter.java b/app/src/main/java/com/example/letscook/RecipeIngredientAdapter.java
+--- a/app/src/main/java/com/example/letscook/RecipeIngredientAdapter.java	(revision 4b9571988532d196aec434bca2cedaf6e0ab83d7)
++++ b/app/src/main/java/com/example/letscook/RecipeIngredientAdapter.java	(date 1730759561538)
+@@ -31,7 +31,10 @@
+ 
+     @Override
+     public void onBindViewHolder(@NonNull RecipeIngredientViewHolder holder, int position) {
+-        holder.recipeIngredientTV.setText(" • " + recipeIngredients.get(position).toString());
++        holder.quantityTV.setText(String.valueOf(recipeIngredients.get(position).getQuantity()));
++        holder.fractionTV.setText(recipeIngredients.get(position).getFraction().altToString());
++        holder.measurementTV.setText(recipeIngredients.get(position).getMeasurement().toString());
++        holder.ingredientTV.setText(recipeIngredients.get(position).getIngredient().getName());
+     }
+ 
+     @Override
+@@ -41,13 +44,16 @@
+ 
+     public class RecipeIngredientViewHolder extends RecyclerView.ViewHolder {
+         Button removeIngredientBtn;
+-        TextView recipeIngredientTV;
++        TextView quantityTV, fractionTV, measurementTV, ingredientTV;
+ 
+         public RecipeIngredientViewHolder(@NonNull View itemView) {
+             super(itemView);
+ 
+             removeIngredientBtn = itemView.findViewById(R.id.removeIngredientBtn);
+-            recipeIngredientTV = itemView.findViewById(R.id.recipeIngredientTV);
++            quantityTV = itemView.findViewById(R.id.quantityTV);
++            fractionTV = itemView.findViewById(R.id.fractionTV);
++            measurementTV = itemView.findViewById(R.id.measurementTV);
++            ingredientTV = itemView.findViewById(R.id.ingredientTV);
+ 
+             removeIngredientBtn.setOnClickListener(new View.OnClickListener() {
+                 @Override
+Index: app/src/main/res/layout/activity_main.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<ScrollView xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\">\r\n\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:orientation=\"vertical\"\r\n        android:paddingLeft=\"16dp\"\r\n        android:paddingRight=\"16dp\">\r\n\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:gravity=\"center\"\r\n            android:padding=\"20dp\"\r\n            android:text=\"Enter Recipe\"\r\n            android:textSize=\"20dp\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Recipe name:\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/recipeNameET\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"20dp\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            android:text=\"Description:\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/recipeDescET\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"20dp\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"10dp\"\r\n            android:text=\"Ingredients:\"\r\n            android:textStyle=\"bold\" />\r\n\r\n        <!-- recipe ingredients -->\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/recipeIngredientsRV\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:layout_marginBottom=\"20dp\" />\r\n\r\n        <!-- ingredient input -->\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"ingredient (this will be  a search in the database in the future, for now allow any string)\"/>\r\n\r\n        <EditText\r\n            android:id=\"@+id/ingredientET\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\" />\r\n\r\n        <!-- measurement input -->\r\n        <LinearLayout\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:orientation=\"horizontal\">\r\n\r\n            <!-- quantity-->\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_margin=\"5dp\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"quantity\" />\r\n\r\n                <EditText\r\n                    android:id=\"@+id/quantityET\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"wrap_content\" />\r\n            </LinearLayout>\r\n\r\n            <!-- measurement-->\r\n            <LinearLayout\r\n                android:layout_width=\"wrap_content\"\r\n                android:layout_height=\"wrap_content\"\r\n                android:layout_margin=\"5dp\"\r\n                android:layout_weight=\"1\"\r\n                android:orientation=\"vertical\">\r\n\r\n                <TextView\r\n                    android:layout_width=\"wrap_content\"\r\n                    android:layout_height=\"wrap_content\"\r\n                    android:text=\"measurement\" />\r\n\r\n                <Spinner\r\n                    android:id=\"@+id/measurementSpinner\"\r\n                    android:layout_width=\"match_parent\"\r\n                    android:layout_height=\"45dp\" />\r\n\r\n            </LinearLayout>\r\n        </LinearLayout>\r\n\r\n        <Button\r\n            android:id=\"@+id/addIngredientBtn\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"add ingredient\" />\r\n\r\n        <TextView\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"Steps:\"\r\n            android:textStyle=\"bold\"\r\n            android:layout_marginVertical=\"10dp\" />\r\n\r\n        <androidx.recyclerview.widget.RecyclerView\r\n            android:id=\"@+id/recipeStepsRV\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\" />\r\n\r\n        <EditText\r\n            android:id=\"@+id/enterStepET\"\r\n            android:layout_width=\"match_parent\"\r\n            android:layout_height=\"wrap_content\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/addStepBtn\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"add step\" />\r\n\r\n        <Button\r\n            android:id=\"@+id/addRecipeBtn\"\r\n            android:layout_width=\"wrap_content\"\r\n            android:layout_height=\"wrap_content\"\r\n            android:text=\"add recipe\"\r\n            android:layout_gravity=\"center\" />\r\n\r\n    </LinearLayout>\r\n</ScrollView>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+--- a/app/src/main/res/layout/activity_main.xml	(revision 4b9571988532d196aec434bca2cedaf6e0ab83d7)
++++ b/app/src/main/res/layout/activity_main.xml	(date 1730752915257)
+@@ -67,19 +67,20 @@
+         <EditText
+             android:id="@+id/ingredientET"
+             android:layout_width="match_parent"
+-            android:layout_height="wrap_content" />
++            android:layout_height="wrap_content"
++            android:layout_marginBottom="10dp"/>
+ 
+         <!-- measurement input -->
+         <LinearLayout
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+-            android:orientation="horizontal">
++            android:orientation="horizontal"
++            android:layout_marginBottom="10dp">
+ 
+             <!-- quantity-->
+             <LinearLayout
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+-                android:layout_margin="5dp"
+                 android:layout_weight="1"
+                 android:orientation="vertical">
+ 
+@@ -90,16 +91,32 @@
+ 
+                 <EditText
+                     android:id="@+id/quantityET"
++                    android:layout_width="60dp"
++                    android:layout_height="wrap_content" />
++            </LinearLayout>
++
++            <LinearLayout
++                android:layout_width="wrap_content"
++                android:layout_height="match_parent"
++                android:orientation="vertical"
++                android:layout_weight="2">
++
++                <TextView
++                    android:layout_width="wrap_content"
++                    android:layout_height="wrap_content"
++                    android:text="fraction"/>
++                <Spinner
++                    android:id="@+id/fractionSpinner"
+                     android:layout_width="match_parent"
+-                    android:layout_height="wrap_content" />
++                    android:layout_height="match_parent"/>
++
+             </LinearLayout>
+ 
+             <!-- measurement-->
+             <LinearLayout
+                 android:layout_width="wrap_content"
+-                android:layout_height="wrap_content"
+-                android:layout_margin="5dp"
+-                android:layout_weight="1"
++                android:layout_height="match_parent"
++                android:layout_weight="2"
+                 android:orientation="vertical">
+ 
+                 <TextView
+@@ -110,7 +127,7 @@
+                 <Spinner
+                     android:id="@+id/measurementSpinner"
+                     android:layout_width="match_parent"
+-                    android:layout_height="45dp" />
++                    android:layout_height="match_parent" />
+ 
+             </LinearLayout>
+         </LinearLayout>
+Index: app/src/main/java/com/example/letscook/RecipeIngredient.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.letscook;\r\n\r\n//Defines a quantity and measurement to pair with an ingredient\r\npublic class RecipeIngredient {\r\n    private Ingredient ingredient;\r\n    private double quantity;\r\n    private Measurement measurement;\r\n\r\n    public RecipeIngredient(Ingredient ingredient, double quantity, Measurement measurement) {\r\n        this.ingredient = ingredient;\r\n        this.quantity = quantity;\r\n        this.measurement = measurement;\r\n    }\r\n\r\n    public Ingredient getIngredient() {\r\n        return ingredient;\r\n    }\r\n\r\n    public void setIngredient(Ingredient ingredient) {\r\n        this.ingredient = ingredient;\r\n    }\r\n\r\n    public double getQuantity() {\r\n        return quantity;\r\n    }\r\n\r\n    public void setQuantity(double quantity) {\r\n        this.quantity = quantity;\r\n    }\r\n\r\n    public Measurement getMeasurement() {\r\n        return measurement;\r\n    }\r\n\r\n    public void setMeasurement(Measurement measurement) {\r\n        this.measurement = measurement;\r\n    }\r\n\r\n    public String toString() {\r\n\r\n        if (quantity <= 1){\r\n            return quantity + \" \" + measurement + \" of \" + ingredient.getName();\r\n        }\r\n        else{\r\n            return quantity + \" \" + measurement + \"s of \" + ingredient.getName();\r\n        }\r\n\r\n\r\n    }\r\n\r\n\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/letscook/RecipeIngredient.java b/app/src/main/java/com/example/letscook/RecipeIngredient.java
+--- a/app/src/main/java/com/example/letscook/RecipeIngredient.java	(revision 4b9571988532d196aec434bca2cedaf6e0ab83d7)
++++ b/app/src/main/java/com/example/letscook/RecipeIngredient.java	(date 1730759605122)
+@@ -1,14 +1,19 @@
+ package com.example.letscook;
+ 
++import java.util.ArrayList;
++import java.util.List;
++
+ //Defines a quantity and measurement to pair with an ingredient
+ public class RecipeIngredient {
+     private Ingredient ingredient;
+-    private double quantity;
++    private int quantity;
++    private Fraction fraction;
+     private Measurement measurement;
+ 
+-    public RecipeIngredient(Ingredient ingredient, double quantity, Measurement measurement) {
++    public RecipeIngredient(Ingredient ingredient, int quantity, Fraction fraction, Measurement measurement) {
+         this.ingredient = ingredient;
+         this.quantity = quantity;
++        this.fraction = fraction;
+         this.measurement = measurement;
+     }
+ 
+@@ -20,14 +25,22 @@
+         this.ingredient = ingredient;
+     }
+ 
+-    public double getQuantity() {
++    public int getQuantity() {
+         return quantity;
+     }
+ 
+-    public void setQuantity(double quantity) {
++    public void setQuantity(int quantity) {
+         this.quantity = quantity;
+     }
+ 
++    public Fraction getFraction() {
++        return fraction;
++    }
++
++    public void setFraction(Fraction fraction) {
++        this.fraction = fraction;
++    }
++
+     public Measurement getMeasurement() {
+         return measurement;
+     }
+@@ -36,17 +49,4 @@
+         this.measurement = measurement;
+     }
+ 
+-    public String toString() {
+-
+-        if (quantity <= 1){
+-            return quantity + " " + measurement + " of " + ingredient.getName();
+-        }
+-        else{
+-            return quantity + " " + measurement + "s of " + ingredient.getName();
+-        }
+-
+-
+-    }
+-
+-
+ }
+Index: app/src/main/java/com/example/letscook/Measurement.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.letscook;\r\n\r\npublic enum Measurement {\r\n    Cup,\r\n    Tablespoon,\r\n    Teaspoon;\r\n\r\n    public static String[] getMeasurementStrings() {\r\n        Measurement[] measurements = Measurement.values();\r\n        String[] measurementStrings = new String[measurements.length];\r\n        for (int i = 0; i < measurements.length; i++) {\r\n            measurementStrings[i] = measurements[i].toString();\r\n        }\r\n        return measurementStrings;\r\n    }\r\n}\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/letscook/Measurement.java b/app/src/main/java/com/example/letscook/Measurement.java
+--- a/app/src/main/java/com/example/letscook/Measurement.java	(revision 4b9571988532d196aec434bca2cedaf6e0ab83d7)
++++ b/app/src/main/java/com/example/letscook/Measurement.java	(date 1730741846877)
+@@ -1,9 +1,9 @@
+ package com.example.letscook;
+ 
+ public enum Measurement {
+-    Cup,
+-    Tablespoon,
+-    Teaspoon;
++    Cups,
++    Tablespoons,
++    Teaspoons;
+ 
+     public static String[] getMeasurementStrings() {
+         Measurement[] measurements = Measurement.values();
+Index: app/src/main/java/com/example/letscook/MainActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.letscook;\r\n\r\nimport android.os.Bundle;\r\nimport android.widget.*;\r\n\r\nimport androidx.activity.EdgeToEdge;\r\nimport androidx.appcompat.app.AppCompatActivity;\r\nimport androidx.recyclerview.widget.LinearLayoutManager;\r\nimport androidx.recyclerview.widget.RecyclerView;\r\n\r\nimport com.google.firebase.database.DatabaseReference;\r\nimport com.google.firebase.database.FirebaseDatabase;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\nimport java.util.List;\r\nimport java.util.Map;\r\n\r\npublic class MainActivity extends AppCompatActivity {\r\n\r\n    EditText recipeNameET, recipeDescET, quantityET, ingredientET, enterStepET;\r\n    Button addIngredientBtn, addStepBtn, addRecipeBtn;\r\n    Spinner measurementSpinner;\r\n    RecyclerView ingredientsRecyclerView, stepsRecyclerView;\r\n\r\n    FirebaseDatabase db;\r\n    DatabaseReference ref;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        EdgeToEdge.enable(this);\r\n        setContentView(R.layout.activity_main);\r\n\r\n        enterStepET = findViewById(R.id.enterStepET);\r\n        recipeNameET = findViewById(R.id.recipeNameET);\r\n        recipeDescET = findViewById(R.id.recipeDescET);\r\n        quantityET = findViewById(R.id.quantityET);\r\n        measurementSpinner = findViewById(R.id.measurementSpinner);\r\n        ingredientET = findViewById(R.id.ingredientET);\r\n        addIngredientBtn = findViewById(R.id.addIngredientBtn);\r\n        addStepBtn = findViewById(R.id.addStepBtn);\r\n        ingredientsRecyclerView = findViewById(R.id.recipeIngredientsRV);\r\n        stepsRecyclerView = findViewById(R.id.recipeStepsRV);\r\n        addRecipeBtn = findViewById(R.id.addRecipeBtn);\r\n\r\n        //populate spinner with measurements\r\n        measurementSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Measurement.getMeasurementStrings()));\r\n\r\n        List<RecipeIngredient> recipeIngredients = new ArrayList<>();\r\n\r\n        RecipeIngredientAdapter recipeIngredientAdapter = new RecipeIngredientAdapter(this, recipeIngredients);\r\n        ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));\r\n        ingredientsRecyclerView.setAdapter(recipeIngredientAdapter);\r\n\r\n        //add ingredient button\r\n        addIngredientBtn.setOnClickListener(v -> {\r\n\r\n            //need to add error handling for empty fields and to check that it's an integer\r\n            double quantity = Double.parseDouble(quantityET.getText().toString());\r\n\r\n            Measurement measurement = Measurement.valueOf(measurementSpinner.getSelectedItem().toString());\r\n            //need to make this a search in the database with autocomplete, for now just hardcode\r\n            Ingredient ingredient = new Ingredient(ingredientET.getText().toString(), IngredientCategory.Grain); //always grain for now\r\n\r\n            recipeIngredients.add(new RecipeIngredient(ingredient, quantity, measurement));\r\n            recipeIngredientAdapter.notifyItemInserted(recipeIngredients.size() - 1);\r\n\r\n            quantityET.setText(\"\");\r\n            measurementSpinner.setSelection(0);\r\n            ingredientET.setText(\"\");\r\n        });\r\n\r\n        List<String> recipeSteps = new ArrayList<>();\r\n\r\n        RecipeStepsAdapter recipeStepsAdapter = new RecipeStepsAdapter(this, recipeSteps);\r\n        stepsRecyclerView.setLayoutManager(new LinearLayoutManager(this));\r\n        stepsRecyclerView.setAdapter(recipeStepsAdapter);\r\n\r\n        addStepBtn.setOnClickListener(v -> {\r\n            recipeSteps.add(enterStepET.getText().toString());\r\n            recipeStepsAdapter.notifyItemInserted(recipeSteps.size() - 1);\r\n            enterStepET.setText(\"\");\r\n        });\r\n\r\n        addRecipeBtn.setOnClickListener(v -> {\r\n            //using dummy user for now\r\n            Recipe newrecipe = new Recipe(recipeNameET.getText().toString(), \"dummy user\", recipeDescET.getText().toString(), recipeIngredients, recipeSteps);\r\n\r\n            //add recipe to DB:\r\n            db = FirebaseDatabase.getInstance();\r\n            ref = db.getReference();\r\n            ref.child(\"recipes\").child(newrecipe.getName()).setValue(newrecipe);\r\n\r\n            Toast.makeText(this, \"Recipe added!\", Toast.LENGTH_SHORT).show();\r\n\r\n            //clear fields:\r\n            ClearRecipeFields();\r\n            recipeSteps.clear();\r\n            recipeIngredients.clear();\r\n            recipeStepsAdapter.notifyDataSetChanged();\r\n            recipeIngredientAdapter.notifyDataSetChanged();\r\n        });\r\n    }\r\n\r\n    private void ClearRecipeFields() {\r\n        recipeNameET.setText(\"\");\r\n        recipeDescET.setText(\"\");\r\n        quantityET.setText(\"\");\r\n        ingredientET.setText(\"\");\r\n        enterStepET.setText(\"\");\r\n        measurementSpinner.setSelection(0);\r\n    }\r\n\r\n    //temp class for testing, will want to initialize ingredients from a table in the database\r\n    private Map<String,Ingredient> initializeIngredients(){\r\n        Map<String,Ingredient> ingredients = new HashMap<>();\r\n        ingredients.put(\"flour\", new Ingredient(\"flour\", IngredientCategory.Grain));\r\n        ingredients.put(\"sugar\", new Ingredient(\"sugar\", IngredientCategory.Grain));\r\n        ingredients.put(\"salt\", new Ingredient(\"salt\", IngredientCategory.Spice));\r\n\r\n        return ingredients;\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/letscook/MainActivity.java b/app/src/main/java/com/example/letscook/MainActivity.java
+--- a/app/src/main/java/com/example/letscook/MainActivity.java	(revision 4b9571988532d196aec434bca2cedaf6e0ab83d7)
++++ b/app/src/main/java/com/example/letscook/MainActivity.java	(date 1730759001383)
+@@ -20,7 +20,7 @@
+ 
+     EditText recipeNameET, recipeDescET, quantityET, ingredientET, enterStepET;
+     Button addIngredientBtn, addStepBtn, addRecipeBtn;
+-    Spinner measurementSpinner;
++    Spinner measurementSpinner, fractionSpinner;
+     RecyclerView ingredientsRecyclerView, stepsRecyclerView;
+ 
+     FirebaseDatabase db;
+@@ -36,6 +36,7 @@
+         recipeNameET = findViewById(R.id.recipeNameET);
+         recipeDescET = findViewById(R.id.recipeDescET);
+         quantityET = findViewById(R.id.quantityET);
++        fractionSpinner = findViewById(R.id.fractionSpinner);
+         measurementSpinner = findViewById(R.id.measurementSpinner);
+         ingredientET = findViewById(R.id.ingredientET);
+         addIngredientBtn = findViewById(R.id.addIngredientBtn);
+@@ -47,6 +48,8 @@
+         //populate spinner with measurements
+         measurementSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Measurement.getMeasurementStrings()));
+ 
++        fractionSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, (Fraction.getFractions())));
++
+         List<RecipeIngredient> recipeIngredients = new ArrayList<>();
+ 
+         RecipeIngredientAdapter recipeIngredientAdapter = new RecipeIngredientAdapter(this, recipeIngredients);
+@@ -57,13 +60,16 @@
+         addIngredientBtn.setOnClickListener(v -> {
+ 
+             //need to add error handling for empty fields and to check that it's an integer
+-            double quantity = Double.parseDouble(quantityET.getText().toString());
++            int quantity = Integer.parseInt(quantityET.getText().toString());
+ 
+             Measurement measurement = Measurement.valueOf(measurementSpinner.getSelectedItem().toString());
++
++            Fraction fraction = (Fraction) fractionSpinner.getSelectedItem();
++
+             //need to make this a search in the database with autocomplete, for now just hardcode
+             Ingredient ingredient = new Ingredient(ingredientET.getText().toString(), IngredientCategory.Grain); //always grain for now
+ 
+-            recipeIngredients.add(new RecipeIngredient(ingredient, quantity, measurement));
++            recipeIngredients.add(new RecipeIngredient(ingredient, quantity, fraction, measurement));
+             recipeIngredientAdapter.notifyItemInserted(recipeIngredients.size() - 1);
+ 
+             quantityET.setText("");
+Index: app/src/main/res/layout/recipe_ingredient_input.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:orientation=\"horizontal\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    android:layout_margin=\"10dp\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/recipeIngredientTV\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_weight=\"1\"\r\n        android:text=\"[recipe ingredient]\"/>\r\n\r\n    <androidx.appcompat.widget.AppCompatButton\r\n        android:id=\"@+id/removeIngredientBtn\"\r\n        android:layout_width=\"26dp\"\r\n        android:layout_height=\"26dp\"\r\n        android:background=\"@drawable/red_circle_button_background\"\r\n        android:text=\"X\"\r\n        />\r\n\r\n\r\n</LinearLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/recipe_ingredient_input.xml b/app/src/main/res/layout/recipe_ingredient_input.xml
+--- a/app/src/main/res/layout/recipe_ingredient_input.xml	(revision 4b9571988532d196aec434bca2cedaf6e0ab83d7)
++++ b/app/src/main/res/layout/recipe_ingredient_input.xml	(date 1730745612505)
+@@ -5,20 +5,55 @@
+     android:layout_height="wrap_content"
+     android:layout_margin="10dp">
+ 
+-    <TextView
+-        android:id="@+id/recipeIngredientTV"
++    <LinearLayout
+         android:layout_width="match_parent"
+-        android:layout_height="wrap_content"
+-        android:layout_weight="1"
+-        android:text="[recipe ingredient]"/>
++        android:layout_height="match_parent"
++        android:orientation="horizontal"
++        android:layout_weight="1">
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text=" • "
++            android:textSize="20dp"/>
++
++        <TextView
++            android:id="@+id/quantityTV"
++            android:layout_width="wrap_content"
++            android:layout_height="match_parent"
++            android:text="[quantity]"/>
++
++        <TextView
++            android:id="@+id/fractionTV"
++            android:layout_width="wrap_content"
++            android:layout_height="match_parent"
++            android:layout_marginEnd="5dp"
++            android:text="[fraction]"/>
++
++        <TextView
++            android:id="@+id/measurementTV"
++            android:layout_width="wrap_content"
++            android:layout_height="match_parent"
++            android:layout_marginEnd="5dp"
++            android:text="[measurement]"/>
++
++        <TextView
++            android:layout_width="wrap_content"
++            android:layout_height="match_parent"
++            android:layout_marginEnd="5dp"
++            android:text="of"/>
++
++        <TextView
++            android:id="@+id/ingredientTV"
++            android:layout_width="wrap_content"
++            android:layout_height="match_parent"
++            android:text="[ingredient name]"/>
++    </LinearLayout>
+ 
+     <androidx.appcompat.widget.AppCompatButton
+         android:id="@+id/removeIngredientBtn"
+         android:layout_width="26dp"
+         android:layout_height="26dp"
+         android:background="@drawable/red_circle_button_background"
+-        android:text="X"
+-        />
+-
++        android:text="X" />
+ 
+ </LinearLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/example/letscook/Fraction.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/letscook/Fraction.java b/app/src/main/java/com/example/letscook/Fraction.java
+new file mode 100644
+--- /dev/null	(date 1730757995711)
++++ b/app/src/main/java/com/example/letscook/Fraction.java	(date 1730757995711)
+@@ -0,0 +1,59 @@
++package com.example.letscook;
++
++import java.util.ArrayList;
++import java.util.List;
++
++public enum Fraction {
++    NONE,
++    ONE_HALF,
++    ONE_THIRD,
++    TWO_THIRDS,
++    ONE_QUARTER,
++    THREE_QUARTERS;
++
++    //to display in spinner
++    @Override
++    public String toString() {
++        switch (this) {
++            case ONE_HALF:
++                return "1/2";
++            case ONE_THIRD:
++                return "1/3";
++            case TWO_THIRDS:
++                return "2/3";
++            case ONE_QUARTER:
++                return "1/4";
++            case THREE_QUARTERS:
++                return "3/4";
++            default:
++                return "None";
++        }
++    }
++    public String altToString() {
++
++        switch (this) {
++            case ONE_HALF:
++                return "½";
++            case ONE_THIRD:
++                return "⅓";
++            case TWO_THIRDS:
++                return "⅔";
++            case ONE_QUARTER:
++                return "¼";
++            case THREE_QUARTERS:
++                return "¾";
++            default:
++                return "";
++        }
++    }
++    public static List<Fraction> getFractions() {
++        List<Fraction> fractions = new ArrayList<>();
++        fractions.add(NONE);
++        fractions.add(ONE_HALF);
++        fractions.add(ONE_THIRD);
++        fractions.add(TWO_THIRDS);
++        fractions.add(ONE_QUARTER);
++        fractions.add(THREE_QUARTERS);
++        return fractions;
++    }
++}
+Index: app/build.gradle.kts
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    alias(libs.plugins.android.application)\r\n    alias(libs.plugins.google.gms.google.services)\r\n}\r\n\r\nandroid {\r\n    namespace = \"com.example.letscook\"\r\n    compileSdk = 34\r\n\r\n    defaultConfig {\r\n        applicationId = \"com.example.letscook\"\r\n        minSdk = 24\r\n        targetSdk = 34\r\n        versionCode = 1\r\n        versionName = \"1.0\"\r\n\r\n        testInstrumentationRunner = \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            isMinifyEnabled = false\r\n            proguardFiles(\r\n                getDefaultProguardFile(\"proguard-android-optimize.txt\"),\r\n                \"proguard-rules.pro\"\r\n            )\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility = JavaVersion.VERSION_1_8\r\n        targetCompatibility = JavaVersion.VERSION_1_8\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation(libs.appcompat)\r\n    implementation(libs.material)\r\n    implementation(libs.activity)\r\n    implementation(libs.constraintlayout)\r\n    implementation(libs.firebase.database)\r\n    testImplementation(libs.junit)\r\n    androidTestImplementation(libs.ext.junit)\r\n    androidTestImplementation(libs.espresso.core)\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle.kts b/app/build.gradle.kts
+--- a/app/build.gradle.kts	(revision 4b9571988532d196aec434bca2cedaf6e0ab83d7)
++++ b/app/build.gradle.kts	(date 1730738240535)
+@@ -39,6 +39,7 @@
+     implementation(libs.activity)
+     implementation(libs.constraintlayout)
+     implementation(libs.firebase.database)
++    implementation("org.apache.commons:commons-math3:3.6.1")
+     testImplementation(libs.junit)
+     androidTestImplementation(libs.ext.junit)
+     androidTestImplementation(libs.espresso.core)
