@@ -11,7 +11,7 @@ public class User {
 
     private boolean isPremium;
 
-    public User(String username, String firstName, String lastName, String email, String password){
+    public User( String username,String firstName, String lastName, String email, String password){
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -19,7 +19,7 @@ public class User {
         this.password = password;
     }
 
-    public String getUsername() {
+   public String getUsername() {
         return username;
     }
 

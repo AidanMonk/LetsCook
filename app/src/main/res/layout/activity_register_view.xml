@@ -59,7 +59,8 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:textSize="30dp"
-        android:hint="Enter your email"/>
+        android:hint="Enter your email"
+        android:inputType="textEmailAddress"/>
 
     <!--    password textview and edittext-->
     <TextView
@@ -89,7 +90,21 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
-        android:hint="Confirm your Password"/>
+        android:hint="Confirm your Password" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Username"/>
+
+    <EditText
+        android:id="@+id/edtUsernameR"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:hint="Enter your username"/>
 
 
     <Button
