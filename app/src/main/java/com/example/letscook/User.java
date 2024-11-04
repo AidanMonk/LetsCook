@@ -7,6 +7,10 @@ public class User {
     private String email;
     private String password;
 
+
+
+    private boolean isPremium;
+
     public User(String username, String firstName, String lastName, String email, String password){
         this.username = username;
         this.firstName = firstName;
@@ -53,5 +57,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(boolean premium) {
+        isPremium = premium;
     }
 }
