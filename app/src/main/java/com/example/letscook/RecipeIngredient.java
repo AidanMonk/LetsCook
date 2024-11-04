@@ -1,14 +1,19 @@
 package com.example.letscook;
 
+import java.util.ArrayList;
+import java.util.List;
+
 //Defines a quantity and measurement to pair with an ingredient
 public class RecipeIngredient {
     private Ingredient ingredient;
-    private double quantity;
+    private int quantity;
+    private Fraction fraction;
     private Measurement measurement;
 
-    public RecipeIngredient(Ingredient ingredient, double quantity, Measurement measurement) {
+    public RecipeIngredient(Ingredient ingredient, int quantity, Fraction fraction, Measurement measurement) {
         this.ingredient = ingredient;
         this.quantity = quantity;
+        this.fraction = fraction;
         this.measurement = measurement;
     }
 
@@ -20,12 +25,20 @@ public class RecipeIngredient {
         this.ingredient = ingredient;
     }
 
-    public double getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Fraction getFraction() {
+        return fraction;
+    }
+
+    public void setFraction(Fraction fraction) {
+        this.fraction = fraction;
     }
 
     public Measurement getMeasurement() {
@@ -35,18 +48,5 @@ public class RecipeIngredient {
     public void setMeasurement(Measurement measurement) {
         this.measurement = measurement;
     }
-
-    public String toString() {
-
-        if (quantity <= 1){
-            return quantity + " " + measurement + " of " + ingredient.getName();
-        }
-        else{
-            return quantity + " " + measurement + "s of " + ingredient.getName();
-        }
-
-
-    }
-
 
 }

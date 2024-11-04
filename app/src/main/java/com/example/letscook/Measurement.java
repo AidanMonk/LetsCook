@@ -1,9 +1,9 @@
 package com.example.letscook;
 
 public enum Measurement {
-    Cup,
-    Tablespoon,
-    Teaspoon;
+    Cups,
+    Tablespoons,
+    Teaspoons;
 
     public static String[] getMeasurementStrings() {
         Measurement[] measurements = Measurement.values();

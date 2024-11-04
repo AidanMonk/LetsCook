@@ -67,19 +67,20 @@
         <EditText
             android:id="@+id/ingredientET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"/>
 
         <!-- measurement input -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
 
             <!-- quantity-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
 
@@ -90,16 +91,32 @@
 
                 <EditText
                     android:id="@+id/quantityET"
-                    android:layout_width="match_parent"
+                    android:layout_width="60dp"
                     android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="2">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="fraction"/>
+                <Spinner
+                    android:id="@+id/fractionSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"/>
+
             </LinearLayout>
 
             <!-- measurement-->
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_weight="2"
                 android:orientation="vertical">
 
                 <TextView
@@ -110,7 +127,7 @@
                 <Spinner
                     android:id="@+id/measurementSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp" />
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
         </LinearLayout>

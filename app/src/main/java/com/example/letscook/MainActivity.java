@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
 
     EditText recipeNameET, recipeDescET, quantityET, ingredientET, enterStepET;
     Button addIngredientBtn, addStepBtn, addRecipeBtn;
-    Spinner measurementSpinner;
+    Spinner measurementSpinner, fractionSpinner;
     RecyclerView ingredientsRecyclerView, stepsRecyclerView;
 
     FirebaseDatabase db;
@@ -36,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         recipeNameET = findViewById(R.id.recipeNameET);
         recipeDescET = findViewById(R.id.recipeDescET);
         quantityET = findViewById(R.id.quantityET);
+        fractionSpinner = findViewById(R.id.fractionSpinner);
         measurementSpinner = findViewById(R.id.measurementSpinner);
         ingredientET = findViewById(R.id.ingredientET);
         addIngredientBtn = findViewById(R.id.addIngredientBtn);
@@ -47,6 +48,8 @@ public class MainActivity extends AppCompatActivity {
         //populate spinner with measurements
         measurementSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Measurement.getMeasurementStrings()));
 
+        fractionSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, (Fraction.getFractions())));
+
         List<RecipeIngredient> recipeIngredients = new ArrayList<>();
 
         RecipeIngredientAdapter recipeIngredientAdapter = new RecipeIngredientAdapter(this, recipeIngredients);
@@ -57,13 +60,16 @@ public class MainActivity extends AppCompatActivity {
         addIngredientBtn.setOnClickListener(v -> {
 
             //need to add error handling for empty fields and to check that it's an integer
-            double quantity = Double.parseDouble(quantityET.getText().toString());
+            int quantity = Integer.parseInt(quantityET.getText().toString());
 
             Measurement measurement = Measurement.valueOf(measurementSpinner.getSelectedItem().toString());
+
+            Fraction fraction = (Fraction) fractionSpinner.getSelectedItem();
+
             //need to make this a search in the database with autocomplete, for now just hardcode
             Ingredient ingredient = new Ingredient(ingredientET.getText().toString(), IngredientCategory.Grain); //always grain for now
 
-            recipeIngredients.add(new RecipeIngredient(ingredient, quantity, measurement));
+            recipeIngredients.add(new RecipeIngredient(ingredient, quantity, fraction, measurement));
             recipeIngredientAdapter.notifyItemInserted(recipeIngredients.size() - 1);
 
             quantityET.setText("");
