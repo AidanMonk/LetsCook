@@ -5,20 +5,30 @@
     android:layout_height="wrap_content"
     android:layout_margin="10dp">
 
-    <TextView
-        android:id="@+id/recipeIngredientTV"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="[recipe ingredient]"/>
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_weight="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" • "
+            android:textSize="20dp"/>
+
+        <TextView
+            android:id="@+id/recipeTV"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="[recipe]"/>
+
+    </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/removeIngredientBtn"
         android:layout_width="26dp"
         android:layout_height="26dp"
         android:background="@drawable/red_circle_button_background"
-        android:text="X"
-        />
-
+        android:text="X" />
 
 </LinearLayout>

@@ -31,7 +31,7 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
 
     @Override
     public void onBindViewHolder(@NonNull RecipeIngredientViewHolder holder, int position) {
-        holder.recipeIngredientTV.setText(" • " + recipeIngredients.get(position).toString());
+        holder.recipeTV.setText(String.valueOf(recipeIngredients.get(position).toString()));
     }
 
     @Override
@@ -41,13 +41,13 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
 
     public class RecipeIngredientViewHolder extends RecyclerView.ViewHolder {
         Button removeIngredientBtn;
-        TextView recipeIngredientTV;
+        TextView recipeTV;
 
         public RecipeIngredientViewHolder(@NonNull View itemView) {
             super(itemView);
 
             removeIngredientBtn = itemView.findViewById(R.id.removeIngredientBtn);
-            recipeIngredientTV = itemView.findViewById(R.id.recipeIngredientTV);
+            recipeTV = itemView.findViewById(R.id.recipeTV);
 
             removeIngredientBtn.setOnClickListener(new View.OnClickListener() {
                 @Override

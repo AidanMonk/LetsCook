@@ -3,12 +3,14 @@ package com.example.letscook;
 //Defines a quantity and measurement to pair with an ingredient
 public class RecipeIngredient {
     private Ingredient ingredient;
-    private double quantity;
+    private int quantity;
+    private Fraction fraction;
     private Measurement measurement;
 
-    public RecipeIngredient(Ingredient ingredient, double quantity, Measurement measurement) {
+    public RecipeIngredient(Ingredient ingredient, int quantity, Fraction fraction, Measurement measurement) {
         this.ingredient = ingredient;
         this.quantity = quantity;
+        this.fraction = fraction;
         this.measurement = measurement;
     }
 
@@ -20,12 +22,20 @@ public class RecipeIngredient {
         this.ingredient = ingredient;
     }
 
-    public double getQuantity() {
+    public int getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(double quantity) {
+    public void setQuantity(int quantity) {
         this.quantity = quantity;
+    }
+
+    public Fraction getFraction() {
+        return fraction;
+    }
+
+    public void setFraction(Fraction fraction) {
+        this.fraction = fraction;
     }
 
     public Measurement getMeasurement() {
@@ -36,17 +46,22 @@ public class RecipeIngredient {
         this.measurement = measurement;
     }
 
-    public String toString() {
-
-        if (quantity <= 1){
-            return quantity + " " + measurement + " of " + ingredient.getName();
+    public String measurementToString() {
+        if (this.quantity <= 1) {
+            return measurement.toString().toLowerCase().substring(0, measurement.toString().length() - 1);
         }
         else{
-            return quantity + " " + measurement + "s of " + ingredient.getName();
+            return measurement.toString().toLowerCase();
         }
-
-
     }
-
+    @Override
+    public String toString(){
+        if (this.measurement == Measurement.UNITS){
+            return quantity + " " + fraction.toString() + " " + ingredient.getName();
+        }
+        else{
+            return quantity + " " + fraction.toString() + " " + measurementToString() + " of " + ingredient.getName();
+        }
+    }
 
 }
