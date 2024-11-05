@@ -12,8 +12,7 @@ public enum Fraction {
     THREE_QUARTERS;
 
     //to display in spinner
-    @Override
-    public String toString() {
+    public String altToString() {
         switch (this) {
             case ONE_HALF:
                 return "1/2";
@@ -29,7 +28,8 @@ public enum Fraction {
                 return "None";
         }
     }
-    public String altToString() {
+    @Override
+    public String toString() {
 
         switch (this) {
             case ONE_HALF:
@@ -46,14 +46,28 @@ public enum Fraction {
                 return "";
         }
     }
-    public static List<Fraction> getFractions() {
-        List<Fraction> fractions = new ArrayList<>();
-        fractions.add(NONE);
-        fractions.add(ONE_HALF);
-        fractions.add(ONE_THIRD);
-        fractions.add(TWO_THIRDS);
-        fractions.add(ONE_QUARTER);
-        fractions.add(THREE_QUARTERS);
+    public static List<String> getFractionStrings() {
+        List<String> fractions = new ArrayList<>();
+        for (Fraction fraction : Fraction.values()) {
+            fractions.add(fraction.altToString());
+        }
         return fractions;
+    }
+
+    public static Fraction fromString(String fractionString) {
+        switch (fractionString) {
+            case "1/2":
+                return ONE_HALF;
+            case "1/3":
+                return ONE_THIRD;
+            case "2/3":
+                return TWO_THIRDS;
+            case "1/4":
+                return ONE_QUARTER;
+            case "3/4":
+                return THREE_QUARTERS;
+            default:
+                return NONE;
+        }
     }
 }

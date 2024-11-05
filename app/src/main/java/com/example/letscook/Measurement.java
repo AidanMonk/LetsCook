@@ -1,9 +1,10 @@
 package com.example.letscook;
 
 public enum Measurement {
-    Cups,
-    Tablespoons,
-    Teaspoons;
+    CUPS,
+    TABLESPOONS,
+    TEASPOONS,
+    UNITS;
 
     public static String[] getMeasurementStrings() {
         Measurement[] measurements = Measurement.values();
@@ -12,6 +13,22 @@ public enum Measurement {
             measurementStrings[i] = measurements[i].toString();
         }
         return measurementStrings;
+    }
+
+    @Override
+    public String toString() {
+        switch (this) {
+            case CUPS:
+                return "cups";
+            case TABLESPOONS:
+                return "tablespoons";
+            case TEASPOONS:
+                return "teaspoons";
+            case UNITS:
+                return "units";
+            default:
+                return "";
+        }
     }
 }
 

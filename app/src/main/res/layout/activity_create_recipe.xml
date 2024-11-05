@@ -56,19 +56,7 @@
             android:id="@+id/recipeIngredientsRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp" />
-
-        <!-- ingredient input -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ingredient (this will be  a search in the database in the future, for now allow any string)"/>
-
-        <EditText
-            android:id="@+id/ingredientET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp" />
 
         <!-- measurement input -->
         <LinearLayout
@@ -83,28 +71,32 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:orientation="vertical">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="quantity" />
+                    android:text="add quantity"
+                    android:textSize="10dp" />
 
                 <EditText
                     android:id="@+id/quantityET"
-                    android:layout_width="60dp"
-                    android:layout_height="wrap_content" />
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:hint="num"/>
             </LinearLayout>
 
+            <!-- fraction-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:layout_weight="2">
+                android:layout_weight="6">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="fraction"/>
+                    android:text="add fraction"
+                    android:textSize="10dp" />
+
                 <Spinner
                     android:id="@+id/fractionSpinner"
                     android:layout_width="match_parent"
@@ -116,14 +108,14 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="2"
+                android:layout_weight="3"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="measurement" />
-
+                    android:text="add measurement"
+                    android:textSize="10dp" />
                 <Spinner
                     android:id="@+id/measurementSpinner"
                     android:layout_width="match_parent"
@@ -131,6 +123,19 @@
 
             </LinearLayout>
         </LinearLayout>
+
+        <!-- ingredient input -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="(this will be  a search in the database, for now any allow any string)"/>
+        <EditText
+            android:id="@+id/ingredientET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:hint="ingredient" />
 
         <Button
             android:id="@+id/addIngredientBtn"

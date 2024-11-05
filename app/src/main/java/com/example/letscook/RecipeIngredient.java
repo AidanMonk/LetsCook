@@ -1,8 +1,5 @@
 package com.example.letscook;
 
-import java.util.ArrayList;
-import java.util.List;
-
 //Defines a quantity and measurement to pair with an ingredient
 public class RecipeIngredient {
     private Ingredient ingredient;
@@ -47,6 +44,24 @@ public class RecipeIngredient {
 
     public void setMeasurement(Measurement measurement) {
         this.measurement = measurement;
+    }
+
+    public String measurementToString() {
+        if (this.quantity <= 1) {
+            return measurement.toString().toLowerCase().substring(0, measurement.toString().length() - 1);
+        }
+        else{
+            return measurement.toString().toLowerCase();
+        }
+    }
+    @Override
+    public String toString(){
+        if (this.measurement == Measurement.UNITS){
+            return quantity + " " + fraction.toString() + " " + ingredient.getName();
+        }
+        else{
+            return quantity + " " + fraction.toString() + " " + measurementToString() + " of " + ingredient.getName();
+        }
     }
 
 }

@@ -1,11 +1,11 @@
 package com.example.letscook;
 
 public enum IngredientCategory {
-    Protein,
-    Grain,
-    Vegetable,
-    legume,
-    Fruit,
-    Dairy,
-    Spice,
+    PROTEIN,
+    GRAIN,
+    VEGETABLE,
+    LEGUME,
+    FRUIT,
+    DAIRY,
+    SPICE,
 }

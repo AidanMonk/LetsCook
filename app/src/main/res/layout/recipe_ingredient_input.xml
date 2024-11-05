@@ -17,36 +17,11 @@
             android:textSize="20dp"/>
 
         <TextView
-            android:id="@+id/quantityTV"
+            android:id="@+id/recipeTV"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="[quantity]"/>
+            android:text="[recipe]"/>
 
-        <TextView
-            android:id="@+id/fractionTV"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"
-            android:text="[fraction]"/>
-
-        <TextView
-            android:id="@+id/measurementTV"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"
-            android:text="[measurement]"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginEnd="5dp"
-            android:text="of"/>
-
-        <TextView
-            android:id="@+id/ingredientTV"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="[ingredient name]"/>
     </LinearLayout>
 
     <androidx.appcompat.widget.AppCompatButton
