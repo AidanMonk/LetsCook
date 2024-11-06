@@ -94,4 +94,6 @@ public class LoginView extends AppCompatActivity {
                     }
                 });
     }
+
+    //this is a test
 }
