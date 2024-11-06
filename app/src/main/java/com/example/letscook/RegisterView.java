@@ -94,7 +94,7 @@ public class RegisterView extends AppCompatActivity {
 
     private void checkUniqueUserAndRegister() {
         // Check if the email and username is unique in Firebase
-        reference.orderByChild("email").equalTo(email.getText().toString())
+        reference.orderByChild("email").equalTo(email.getText().toString().toLowerCase())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
@@ -102,7 +102,7 @@ public class RegisterView extends AppCompatActivity {
                             email.setError("Email already registered");
                             Toast.makeText(RegisterView.this, "Email already registered", Toast.LENGTH_SHORT).show();
                         } else {
-                            reference.orderByChild("username").equalTo(username.getText().toString())
+                            reference.orderByChild("username").equalTo(username.getText().toString().toLowerCase())
                                     .addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -133,10 +133,10 @@ public class RegisterView extends AppCompatActivity {
     private void registerUser() {
         // Create a new user object with the input data
         User newUser = new User(
-                username.getText().toString(),
+                username.getText().toString().toLowerCase(),
                 firstName.getText().toString(),
                 lastName.getText().toString(),
-                email.getText().toString(),
+                email.getText().toString().toLowerCase(),
                 password.getText().toString()
         );
 

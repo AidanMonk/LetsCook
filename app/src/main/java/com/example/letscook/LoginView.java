@@ -66,7 +66,7 @@ public class LoginView extends AppCompatActivity {
 
     private void authenticateUser() {
         // Check if the email and password match a user in Firebase
-        reference.orderByChild("email").equalTo(usernameL.getText().toString())
+        reference.orderByChild("email").equalTo(usernameL.getText().toString().toLowerCase())
                 .addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
