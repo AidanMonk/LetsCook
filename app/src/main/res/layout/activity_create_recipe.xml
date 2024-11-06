@@ -29,12 +29,15 @@
             android:id="@+id/recipeNameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp" />
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginBottom="15dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:text="Description:"
             android:textStyle="bold" />
 
@@ -42,7 +45,11 @@
             android:id="@+id/recipeDescET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp" />
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginBottom="15dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,64 +63,90 @@
             android:id="@+id/recipeIngredientsRV"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp" />
-
-        <!-- ingredient input -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="ingredient (this will be  a search in the database in the future, for now allow any string)"/>
-
-        <EditText
-            android:id="@+id/ingredientET"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_marginBottom="10dp" />
 
         <!-- measurement input -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginBottom="10dp">
 
             <!-- quantity-->
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
                 android:layout_weight="1"
                 android:orientation="vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="add quantity"
+                    android:textSize="10dp" />
+
+                <EditText
+                    android:id="@+id/quantityET"
+                    android:layout_width="50dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/edittext_background"
+                    android:textColor="#333333"
+                    android:textSize="16sp"/>
+            </LinearLayout>
+
+            <!-- fraction-->
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="6">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="quantity" />
+                    android:text="add fraction"
+                    android:textSize="10dp" />
 
-                <EditText
-                    android:id="@+id/quantityET"
+                <Spinner
+                    android:id="@+id/fractionSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent"/>
+
             </LinearLayout>
 
             <!-- measurement-->
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:layout_weight="1"
+                android:layout_height="match_parent"
+                android:layout_weight="3"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="measurement" />
-
+                    android:text="add measurement"
+                    android:textSize="10dp" />
                 <Spinner
                     android:id="@+id/measurementSpinner"
                     android:layout_width="match_parent"
-                    android:layout_height="45dp" />
+                    android:layout_height="match_parent" />
 
             </LinearLayout>
         </LinearLayout>
+
+        <!-- ingredient input -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:text="(this will be  a search in the database, for now any allow any string)"/>
+        <EditText
+            android:id="@+id/ingredientET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#333333"
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/addIngredientBtn"
@@ -136,7 +169,11 @@
         <EditText
             android:id="@+id/enterStepET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#333333"
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/addStepBtn"

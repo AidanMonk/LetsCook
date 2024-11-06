@@ -16,10 +16,10 @@
             android:name=".RegisterView"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginView"
             android:exported="false" />
         <activity
-            android:name=".LoginView"
+            android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
