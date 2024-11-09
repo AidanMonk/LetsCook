@@ -29,12 +29,15 @@
             android:id="@+id/recipeNameET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp" />
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginBottom="15dp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
             android:text="Description:"
             android:textStyle="bold" />
 
@@ -42,7 +45,11 @@
             android:id="@+id/recipeDescET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp" />
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#333333"
+            android:textSize="16sp"
+            android:layout_marginBottom="15dp"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -79,9 +86,11 @@
 
                 <EditText
                     android:id="@+id/quantityET"
-                    android:layout_width="80dp"
+                    android:layout_width="50dp"
                     android:layout_height="wrap_content"
-                    android:hint="num"/>
+                    android:background="@drawable/edittext_background"
+                    android:textColor="#333333"
+                    android:textSize="16sp"/>
             </LinearLayout>
 
             <!-- fraction-->
@@ -134,8 +143,10 @@
             android:id="@+id/ingredientET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:hint="ingredient" />
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#333333"
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/addIngredientBtn"
@@ -158,7 +169,11 @@
         <EditText
             android:id="@+id/enterStepET"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="@drawable/edittext_background"
+            android:padding="5dp"
+            android:textColor="#333333"
+            android:textSize="16sp"/>
 
         <Button
             android:id="@+id/addStepBtn"

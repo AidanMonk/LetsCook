@@ -1,4 +1,4 @@
-package com.example.letscook;
+package com.example.letscook.Models;
 
 public enum IngredientCategory {
     PROTEIN,

@@ -1,4 +1,4 @@
-package com.example.letscook;
+package com.example.letscook.Models;
 
 public class User {
     private String username;
@@ -7,7 +7,11 @@ public class User {
     private String email;
     private String password;
 
-    public User(String username, String firstName, String lastName, String email, String password){
+
+
+    private boolean isPremium;
+
+    public User( String username,String firstName, String lastName, String email, String password){
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -15,7 +19,7 @@ public class User {
         this.password = password;
     }
 
-    public String getUsername() {
+   public String getUsername() {
         return username;
     }
 
@@ -53,5 +57,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean isPremium() {
+        return isPremium;
+    }
+
+    public void setPremium(boolean premium) {
+        isPremium = premium;
     }
 }

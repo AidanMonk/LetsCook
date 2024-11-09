@@ -1,4 +1,4 @@
-package com.example.letscook;
+package com.example.letscook.Models;
 
 import java.util.List;
 
@@ -10,6 +10,8 @@ public class Recipe {
     //add image parameter, tbd how we will store these
     private List<RecipeIngredient> ingredients;
     private List<String> steps;
+
+    public Recipe(){}
 
     public Recipe(String name, String author, String description, List<RecipeIngredient> ingredients, List<String> steps){
         this.name = name;

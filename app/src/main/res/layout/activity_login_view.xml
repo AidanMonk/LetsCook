@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -14,13 +15,14 @@
         android:text="Username" />
 
     <EditText
-        android:id="@+id/edtusername"
+        android:id="@+id/edtEmailL"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:textSize="30dp"
-        android:hint="Enter your username"/>
+        android:hint="Enter your email"
+        android:inputType="textEmailAddress"/>
 
-<!--    password textview and edittext-->
+    <!--    password textview and edittext-->
     <TextView
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -30,16 +32,29 @@
         android:text="Password"/>
 
     <EditText
-        android:id="@+id/Edtpassword"
+        android:id="@+id/edtpasswordL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="30dp"
         android:hint="Enter your Password"/>
+
     <Button
         android:id="@+id/btnlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="30dp"
+        android:layout_marginTop="40dp"
         android:text="Login"/>
+
+    <TextView
+        android:id="@+id/txtSignUp"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:textSize="30dp"
+        android:textStyle="italic"
+        android:textColor="@color/blue"
+        android:gravity="center"
+        android:layout_marginTop="30dp"
+        android:text="SignUp"/>
 
 </LinearLayout>

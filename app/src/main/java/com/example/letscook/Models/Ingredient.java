@@ -1,10 +1,12 @@
-package com.example.letscook;
+package com.example.letscook.Models;
 
 //Ingredient class defines a simple ingredient, plan to initialize these ingredient objects from the database
 public class Ingredient{
     private String name;
     private IngredientCategory category;
     //image?
+
+    public Ingredient(){}
 
     public Ingredient(String name, IngredientCategory category){
         this.name = name;
