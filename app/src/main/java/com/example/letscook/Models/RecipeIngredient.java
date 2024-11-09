@@ -1,4 +1,4 @@
-package com.example.letscook;
+package com.example.letscook.Models;
 
 //Defines a quantity and measurement to pair with an ingredient
 public class RecipeIngredient {
@@ -6,6 +6,8 @@ public class RecipeIngredient {
     private int quantity;
     private Fraction fraction;
     private Measurement measurement;
+
+    public RecipeIngredient(){}
 
     public RecipeIngredient(Ingredient ingredient, int quantity, Fraction fraction, Measurement measurement) {
         this.ingredient = ingredient;

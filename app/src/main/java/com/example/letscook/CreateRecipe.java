@@ -8,17 +8,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.letscook.Adapters.RecipeIngredientAdapter;
+import com.example.letscook.Adapters.RecipeStepsAdapter;
 import com.example.letscook.Exceptions.InvalidRecipeDescException;
 import com.example.letscook.Exceptions.InvalidRecipeIngredientException;
 import com.example.letscook.Exceptions.InvalidRecipeNameException;
 import com.example.letscook.Exceptions.InvalidRecipeStepException;
+import com.example.letscook.Models.Fraction;
+import com.example.letscook.Models.Ingredient;
+import com.example.letscook.Models.IngredientCategory;
+import com.example.letscook.Models.Measurement;
+import com.example.letscook.Models.Recipe;
+import com.example.letscook.Models.RecipeIngredient;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class CreateRecipe extends AppCompatActivity {
 
     // UI components
     EditText recipeNameET, recipeDescET, quantityET, ingredientET, enterStepET;

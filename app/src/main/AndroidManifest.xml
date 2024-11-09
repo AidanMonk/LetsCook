@@ -13,23 +13,29 @@
         android:theme="@style/Theme.LetsCook"
         tools:targetApi="31">
         <activity
-            android:name=".UserProfile"
-            android:exported="false" />
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegisterView"
-            android:exported="false" />
-        <activity
-            android:name=".LoginView"
-            android:exported="true">
+            android:name=".LinksView"
+            android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".FeaturedView"
+            android:exported="false"/>
+        <activity
+            android:name=".UserProfile"
+            android:exported="false" />
+        <activity
+            android:name=".CreateRecipe"
+            android:exported="true" />
+        <activity
+            android:name=".RegisterView"
+            android:exported="false" />
+        <activity
+            android:name=".LoginView"
+            android:exported="false"/>
     </application>
 
 </manifest>

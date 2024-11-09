@@ -8,12 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -77,7 +73,7 @@ public class LoginView extends AppCompatActivity {
                                 if (storedPassword != null && storedPassword.equals(password.getText().toString())) {
                                     // Login successful -> main activity
                                     Toast.makeText(LoginView.this, "Login successful", Toast.LENGTH_SHORT).show();
-                                    startActivity(new Intent(LoginView.this, MainActivity.class)); // Change HomeActivity to your main screen
+                                    startActivity(new Intent(LoginView.this, CreateRecipe.class)); // Change HomeActivity to your main screen
                                     finish();
                                 } else {
                                     Toast.makeText(LoginView.this, "Username or password is invalid", Toast.LENGTH_SHORT).show();

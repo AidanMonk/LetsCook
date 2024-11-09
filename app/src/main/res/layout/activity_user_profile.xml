@@ -220,9 +220,8 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravit="center"
-        android:text="My recipe"
-        />
+        android:layout_gravity="center"
+        android:text="My recipe"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/UserpageRecipeRV"
