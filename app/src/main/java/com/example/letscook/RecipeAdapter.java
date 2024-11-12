@@ -32,11 +32,11 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public void onBindViewHolder(RecipeViewHolder holder, int position) {
         Recipe recipe = recipeList.get(position);
         holder.recipeTitle.setText(recipe.title);
-        holder.recipeSummary.setText(Html.fromHtml(recipe.sourceName));
+        holder.recipeSourceName.setText(Html.fromHtml(recipe.sourceName));
 
         // Load the recipe image using Glide
         Glide.with(holder.itemView.getContext())
-                .load(recipe.image)  // Recipe image URL from API
+                .load(recipe.image)
                 .into(holder.recipeImage);
     }
 
@@ -48,13 +48,13 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
     public static class RecipeViewHolder extends RecyclerView.ViewHolder {
         ImageView recipeImage;
         TextView recipeTitle;
-        TextView recipeSummary;
+        TextView recipeSourceName;
 
         public RecipeViewHolder(View itemView) {
             super(itemView);
             recipeImage = itemView.findViewById(R.id.recipeImage);
             recipeTitle = itemView.findViewById(R.id.recipeTitle);
-            recipeSummary = itemView.findViewById(R.id.recipeSummary);
+            recipeSourceName = itemView.findViewById(R.id.recipeSourceName);
         }
     }
 }
