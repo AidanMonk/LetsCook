@@ -181,6 +181,26 @@
             android:layout_height="wrap_content"
             android:text="add step" />
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Image:"
+            android:textStyle="bold"
+            android:layout_marginVertical="10dp" />
+
+        <ImageView
+            android:id="@+id/imagePreview"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:visibility="gone"/>
+
+        <Button
+            android:id="@+id/addImageBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="add image"/>
+
         <Button
             android:id="@+id/addRecipeBtn"
             android:layout_width="wrap_content"

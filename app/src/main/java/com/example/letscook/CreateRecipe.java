@@ -1,13 +1,20 @@
 package com.example.letscook;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.*;
 
 import androidx.activity.EdgeToEdge;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.letscook.Adapters.RecipeIngredientAdapter;
 import com.example.letscook.Adapters.RecipeStepsAdapter;
 import com.example.letscook.Exceptions.InvalidRecipeDescException;
@@ -30,9 +37,11 @@ public class CreateRecipe extends AppCompatActivity {
 
     // UI components
     EditText recipeNameET, recipeDescET, quantityET, ingredientET, enterStepET;
-    Button addIngredientBtn, addStepBtn, addRecipeBtn;
+    Button addIngredientBtn, addStepBtn, addRecipeBtn, imageAddBtn;
     Spinner measurementSpinner, fractionSpinner;
     RecyclerView ingredientsRecyclerView, stepsRecyclerView;
+    Uri selectedImageUri;
+    ImageView imagePreview;
 
     // Firebase
     FirebaseDatabase db;
@@ -47,6 +56,23 @@ public class CreateRecipe extends AppCompatActivity {
     RecipeStepsAdapter recipeStepsAdapter;
     List<RecipeIngredient> recipeIngredients = new ArrayList<>();
     List<String> recipeSteps = new ArrayList<>();
+
+    //create gallery launcher to handle image selection
+    private ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null) {
+                    Uri imageUri = result.getData().getData();
+                    if (imageUri != null) {
+                        selectedImageUri = imageUri;
+
+                        //update form to reflect image has been added
+                        imagePreview.setVisibility(View.VISIBLE);
+                        imageAddBtn.setText("change image");
+                        Glide.with(this).load(imageUri).into(imagePreview);
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,10 +94,11 @@ public class CreateRecipe extends AppCompatActivity {
 
                 Recipe newRecipe = new Recipe(recipeName, author, recipeDesc, recipeIngredients, recipeSteps);
 
-                // Add recipe to DB
-                db = FirebaseDatabase.getInstance();
-                ref = db.getReference();
-                ref.child("recipes").child(newRecipe.getName()).setValue(newRecipe);
+                //upload the selected image once the recipe is added
+                uploadImage(newRecipe.getImageId(), selectedImageUri);
+
+                //add the recipe to the database
+                Database.addRecipe(newRecipe);
 
                 Toast.makeText(this, "Recipe added!", Toast.LENGTH_SHORT).show();
 
@@ -83,6 +110,12 @@ public class CreateRecipe extends AppCompatActivity {
                 Toast.makeText(this, "An unexpected error occurred.", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void openGallery() {
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        galleryLauncher.launch(intent);
     }
 
     private void initializeViews() {
@@ -98,6 +131,8 @@ public class CreateRecipe extends AppCompatActivity {
         stepsRecyclerView = findViewById(R.id.recipeStepsRV);
         measurementSpinner = findViewById(R.id.measurementSpinner);
         fractionSpinner = findViewById(R.id.fractionSpinner);
+        imageAddBtn = findViewById(R.id.addImageBtn);
+        imagePreview = findViewById(R.id.imagePreview);
 
         // Populate spinners
         measurementSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Measurement.getMeasurementStrings()));
@@ -115,6 +150,7 @@ public class CreateRecipe extends AppCompatActivity {
 
         addIngredientBtn.setOnClickListener(v -> addIngredient());
         addStepBtn.setOnClickListener(v -> addStep());
+        imageAddBtn.setOnClickListener(v -> openGallery());
     }
 
     private void addIngredient() {
@@ -155,6 +191,12 @@ public class CreateRecipe extends AppCompatActivity {
         }
     }
 
+    private void uploadImage(String imageId, Uri imageUri) {
+        if (imageUri != null) {
+            Database.uploadImage(imageId, imageUri);
+        }
+    }
+
     private void validateRecipeFields(String name, String desc) throws InvalidRecipeNameException, InvalidRecipeDescException, InvalidRecipeIngredientException, InvalidRecipeStepException {
         String invalidCharactersRegex = "[^a-zA-Z0-9 ]";
         if (name.matches(invalidCharactersRegex)) throw new InvalidRecipeNameException("Invalid characters in recipe name");
@@ -163,6 +205,7 @@ public class CreateRecipe extends AppCompatActivity {
         if (desc.length() > maxRecipeDescLength) throw new InvalidRecipeDescException("Description too long");
         if (recipeIngredients.isEmpty()) throw new InvalidRecipeIngredientException("At least one ingredient required");
         if (recipeSteps.isEmpty()) throw new InvalidRecipeStepException("At least one step required");
+        if (selectedImageUri == null) throw new InvalidRecipeStepException("Image required");
     }
 
     private void clearRecipeFields() {
@@ -174,6 +217,10 @@ public class CreateRecipe extends AppCompatActivity {
         measurementSpinner.setSelection(0);
         recipeIngredients.clear();
         recipeSteps.clear();
+        selectedImageUri = null;
+        imagePreview.setImageDrawable(null);
+        imagePreview.setVisibility(View.GONE);
+        imageAddBtn.setText("add image");
         recipeIngredientAdapter.notifyDataSetChanged();
         recipeStepsAdapter.notifyDataSetChanged();
     }
