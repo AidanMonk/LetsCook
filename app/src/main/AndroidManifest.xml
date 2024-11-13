@@ -37,6 +37,15 @@
             android:name=".RegisterView"
             android:exported="false" />
         <activity
+            android:name=".Homepage"
+            android:exported="false" />
+        <activity
+            android:name=".RecipeAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".RecipesApi"
+            android:exported="false" />
+        <activity
             android:name=".LoginView"
             android:exported="false" />
     </application>

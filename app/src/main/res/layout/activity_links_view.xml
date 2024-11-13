@@ -42,4 +42,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Profile" />
+    <Button
+        android:id="@+id/HomeBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Homepage testing the api" />
 </LinearLayout>

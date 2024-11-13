@@ -23,6 +23,7 @@ public class LinksView extends AppCompatActivity {
         Button featuredBtn = findViewById(R.id.featuredBtn);
         Button createRecipeBtn = findViewById(R.id.createRecipeBtn);
         Button profileBtn = findViewById(R.id.profileBtn);
+        Button HomeBtn = findViewById(R.id.HomeBtn);
 
         // Set up click listeners for each button
         registerBtn.setOnClickListener(v -> {
@@ -47,6 +48,11 @@ public class LinksView extends AppCompatActivity {
 
         profileBtn.setOnClickListener(v -> {
             Intent intent = new Intent(LinksView.this, UserProfile.class);
+            startActivity(intent);
+        });
+
+        HomeBtn.setOnClickListener(v -> {
+            Intent intent = new Intent(LinksView.this, Homepage.class);
             startActivity(intent);
         });
     }
