@@ -10,7 +10,7 @@
         android:id="@+id/myImageView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/hambuger" />
+        android:scaleType="centerCrop"/>
 
     <TextView
         android:id="@+id/authorTV"

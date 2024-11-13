@@ -1,13 +1,14 @@
 package com.example.letscook.Models;
 
 import java.util.List;
+import java.util.UUID;
 
 //Recipe class defines a single recipe including ingredients, steps, and recipe image
 public class Recipe {
     private String name;
     private String author;
     private String description;
-    //add image parameter, tbd how we will store these
+    private String imageId;
     private List<RecipeIngredient> ingredients;
     private List<String> steps;
 
@@ -17,6 +18,7 @@ public class Recipe {
         this.name = name;
         this.author = author;
         this.description = description;
+        this.imageId = UUID.randomUUID().toString();
         this.ingredients = ingredients;
         this.steps = steps;
     }
@@ -45,6 +47,14 @@ public class Recipe {
         this.description = description;
     }
 
+    public String getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(String imageId) {
+        this.imageId = imageId;
+    }
+
     public List<RecipeIngredient> getIngredients() {
         return ingredients;
     }
@@ -60,4 +70,6 @@ public class Recipe {
     public void setSteps(List<String> steps) {
         this.steps = steps;
     }
+
+
 }

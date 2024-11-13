@@ -1,20 +1,13 @@
 package com.example.letscook;
 
 import android.os.Bundle;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscook.Adapters.RecipeListAdapter;
-import com.example.letscook.Models.Recipe;
-
-import java.util.List;
 
 public class FeaturedView extends AppCompatActivity {
 
@@ -29,11 +22,10 @@ public class FeaturedView extends AppCompatActivity {
         featuredRecipesRecyclerView = findViewById(R.id.featuredRecipesRecyclerView);
 
         //just use all the recipes for now, implement a get for featured recipes later
-        Database.GetRecipes(recipes -> {
+        Database.getRecipes(recipes -> {
             RecipeListAdapter recipeListAdapter = new RecipeListAdapter(this, recipes);
             featuredRecipesRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
             featuredRecipesRecyclerView.setAdapter(recipeListAdapter);
         });
-
     }
 }
