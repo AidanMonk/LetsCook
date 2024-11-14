@@ -1,6 +1,7 @@
 // RecipeAdapter.java
 package com.example.letscook;
 
+import android.content.Context;
 import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,12 @@ import java.util.ArrayList;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
     private ArrayList<Recipe> recipeList ;
+    private Context context;
 
-    public RecipeAdapter(ArrayList<Recipe> recipes) {
+    public RecipeAdapter(ArrayList<Recipe> recipes ) {
+
         this.recipeList = recipes;
+
     }
 
     @Override

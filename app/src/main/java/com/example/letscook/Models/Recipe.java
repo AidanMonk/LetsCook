@@ -11,16 +11,20 @@ public class Recipe {
     private String imageId;
     private List<RecipeIngredient> ingredients;
     private List<String> steps;
+    private RecipeCategory recipeCategory;
+    private List<String> dietaryCategory;
 
     public Recipe(){}
 
-    public Recipe(String name, String author, String description, List<RecipeIngredient> ingredients, List<String> steps){
+    public Recipe(String name, String author, String description, List<RecipeIngredient> ingredients, List<String> steps, RecipeCategory recipeCategory , List<String> dietaryCategory){
         this.name = name;
         this.author = author;
         this.description = description;
         this.imageId = UUID.randomUUID().toString();
         this.ingredients = ingredients;
         this.steps = steps;
+        this.recipeCategory = recipeCategory;
+        this.dietaryCategory = dietaryCategory;
     }
 
     public String getName() {
@@ -70,6 +74,13 @@ public class Recipe {
     public void setSteps(List<String> steps) {
         this.steps = steps;
     }
+    public RecipeCategory getRecipeCategory() {return recipeCategory;}
+
+    public void setRecipeCategory(RecipeCategory recipeCategory) {this.recipeCategory = recipeCategory;}
+
+    public List<String> getDietaryCategory() {return dietaryCategory;}
+
+    public void setDietaryCategory(List<String> dietaryCategory) {this.dietaryCategory = dietaryCategory;}
 
 
 }
