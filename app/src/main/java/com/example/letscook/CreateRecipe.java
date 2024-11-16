@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.letscook.Adapters.RecipeIngredientAdapter;
 import com.example.letscook.Adapters.RecipeStepsAdapter;
+import com.example.letscook.Exceptions.InvalidDietaryException;
 import com.example.letscook.Exceptions.InvalidRecipeDescException;
 import com.example.letscook.Exceptions.InvalidRecipeIngredientException;
 import com.example.letscook.Exceptions.InvalidRecipeNameException;
@@ -29,6 +30,7 @@ import com.example.letscook.Models.Recipe;
 import com.example.letscook.Models.RecipeIngredient;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.example.letscook.Models.RecipeCategory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,10 +40,15 @@ public class CreateRecipe extends AppCompatActivity {
     // UI components
     EditText recipeNameET, recipeDescET, quantityET, ingredientET, enterStepET;
     Button addIngredientBtn, addStepBtn, addRecipeBtn, imageAddBtn;
-    Spinner measurementSpinner, fractionSpinner;
+    Spinner measurementSpinner, fractionSpinner, recipeCategorySpinner;
     RecyclerView ingredientsRecyclerView, stepsRecyclerView;
     Uri selectedImageUri;
     ImageView imagePreview;
+    LinearLayout checkBoxLayout;
+    RadioGroup dietaryRadioGroup;
+    RadioButton yesRadioButton, noRadioButton;
+    CheckBox veganCheckBox, vegetarianCheckBox, dairyFreeCheckBox, nutFreeCheckBox, glutenFreeCheckBox;
+
 
     // Firebase
     FirebaseDatabase db;
@@ -56,6 +63,7 @@ public class CreateRecipe extends AppCompatActivity {
     RecipeStepsAdapter recipeStepsAdapter;
     List<RecipeIngredient> recipeIngredients = new ArrayList<>();
     List<String> recipeSteps = new ArrayList<>();
+    List<String> dietaryCategory = new ArrayList<>();
 
     //create gallery launcher to handle image selection
     private ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
@@ -82,6 +90,9 @@ public class CreateRecipe extends AppCompatActivity {
 
         initializeViews();
         setupAdapters();
+        //to populate the dietaryTags
+        getDietaryCategories();
+
 
         // Add recipe button
         addRecipeBtn.setOnClickListener(v -> {
@@ -90,9 +101,12 @@ public class CreateRecipe extends AppCompatActivity {
                 String recipeDesc = recipeDescET.getText().toString();
                 String author = "dummy user";
 
+                //set the recipe category (spinner)
+                RecipeCategory selectedRecipeCategory = RecipeCategory.valueOf(recipeCategorySpinner.getSelectedItem().toString().toUpperCase());
                 validateRecipeFields(recipeName, recipeDesc);
 
-                Recipe newRecipe = new Recipe(recipeName, author, recipeDesc, recipeIngredients, recipeSteps);
+
+                Recipe newRecipe = new Recipe(recipeName, author, recipeDesc, recipeIngredients, recipeSteps, selectedRecipeCategory, dietaryCategory);
 
                 //upload the selected image once the recipe is added
                 uploadImage(newRecipe.getImageId(), selectedImageUri);
@@ -104,7 +118,8 @@ public class CreateRecipe extends AppCompatActivity {
 
                 // Clear fields and reset adapters
                 clearRecipeFields();
-            } catch (InvalidRecipeNameException | InvalidRecipeDescException | InvalidRecipeIngredientException | InvalidRecipeStepException e) {
+            } catch (InvalidRecipeNameException | InvalidRecipeDescException | InvalidDietaryException|
+                     InvalidRecipeIngredientException | InvalidRecipeStepException e) {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
                 Toast.makeText(this, "An unexpected error occurred.", Toast.LENGTH_SHORT).show();
@@ -133,10 +148,30 @@ public class CreateRecipe extends AppCompatActivity {
         fractionSpinner = findViewById(R.id.fractionSpinner);
         imageAddBtn = findViewById(R.id.addImageBtn);
         imagePreview = findViewById(R.id.imagePreview);
+        recipeCategorySpinner = findViewById(R.id.recipeCategorySpinner);
+
+        dietaryRadioGroup = findViewById(R.id.dietaryRadioGroup);
+        yesRadioButton = findViewById(R.id.yesRadioButton);
+        noRadioButton = findViewById(R.id.noRadioButton);
+
+        //layout
+        checkBoxLayout = findViewById(R.id.layoutCheckBoxes);
+        //checbix
+        veganCheckBox = findViewById(R.id.veganCheckbox);
+        vegetarianCheckBox = findViewById(R.id.vegeterianCheckbox);
+        glutenFreeCheckBox = findViewById(R.id.glutenFreeCheckbox);
+        dairyFreeCheckBox = findViewById(R.id.dairyFreeCheckbox);
+        nutFreeCheckBox = findViewById(R.id.NutFreeCheckbox);
+
 
         // Populate spinners
         measurementSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Measurement.getMeasurementStrings()));
         fractionSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Fraction.getFractionStrings()));
+        recipeCategorySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, RecipeCategory.getRecipeCategoryStrings()));
+
+        //radipo button and initialize the checkboxes value
+
+
     }
 
     private void setupAdapters() {
@@ -197,15 +232,28 @@ public class CreateRecipe extends AppCompatActivity {
         }
     }
 
-    private void validateRecipeFields(String name, String desc) throws InvalidRecipeNameException, InvalidRecipeDescException, InvalidRecipeIngredientException, InvalidRecipeStepException {
+    private void validateRecipeFields(String name, String desc) throws InvalidRecipeNameException, InvalidRecipeDescException, InvalidRecipeIngredientException, InvalidRecipeStepException, InvalidDietaryException {
         String invalidCharactersRegex = "[^a-zA-Z0-9 ]";
-        if (name.matches(invalidCharactersRegex)) throw new InvalidRecipeNameException("Invalid characters in recipe name");
-        if (name.length() > maxRecipeNameLength) throw new InvalidRecipeNameException("Recipe name too long");
-        if (desc.matches(invalidCharactersRegex)) throw new InvalidRecipeDescException("Invalid characters in description");
-        if (desc.length() > maxRecipeDescLength) throw new InvalidRecipeDescException("Description too long");
-        if (recipeIngredients.isEmpty()) throw new InvalidRecipeIngredientException("At least one ingredient required");
-        if (recipeSteps.isEmpty()) throw new InvalidRecipeStepException("At least one step required");
+        if (name.matches(invalidCharactersRegex))
+            throw new InvalidRecipeNameException("Invalid characters in recipe name");
+        if (name.length() > maxRecipeNameLength)
+            throw new InvalidRecipeNameException("Recipe name too long");
+        if (desc.matches(invalidCharactersRegex))
+            throw new InvalidRecipeDescException("Invalid characters in description");
+        if (desc.length() > maxRecipeDescLength)
+            throw new InvalidRecipeDescException("Description too long");
+
+        if (recipeIngredients.isEmpty())
+            throw new InvalidRecipeIngredientException("At least one ingredient required");
+        if (recipeSteps.isEmpty())
+            throw new InvalidRecipeStepException("At least one step required");
         if (selectedImageUri == null) throw new InvalidRecipeStepException("Image required");
+
+        int selectedRadioId = dietaryRadioGroup.getCheckedRadioButtonId();
+        if (selectedRadioId == -1) {throw new InvalidDietaryException("Please select yes or no for dietary options ");}
+        if (dietaryRadioGroup.getCheckedRadioButtonId() == R.id.yesRadioButton && dietaryCategory.isEmpty()) {
+            throw new InvalidDietaryException("Please select at least one dietary option if you chose yes.");
+        }
     }
 
     private void clearRecipeFields() {
@@ -223,5 +271,64 @@ public class CreateRecipe extends AppCompatActivity {
         imageAddBtn.setText("add image");
         recipeIngredientAdapter.notifyDataSetChanged();
         recipeStepsAdapter.notifyDataSetChanged();
+        checkBoxLayout.setVisibility(View.GONE);
+        dietaryRadioGroup.clearCheck();
+        recipeCategorySpinner.setSelection(0);
+        UncheckCheckBOx();
+
+
     }
+
+
+
+    private void getDietaryCategories()  {
+        checkBoxLayout.setVisibility(View.GONE);
+
+        // Set up RadioGroup listener to toggle checkboxes visibility
+        dietaryRadioGroup.setOnCheckedChangeListener((group, checkedId) -> {
+            if (checkedId == R.id.yesRadioButton) {
+                checkBoxLayout.setVisibility(View.VISIBLE);
+                dietaryCategory.clear(); // Reset dietary selection list
+
+            } else {
+                checkBoxLayout.setVisibility(View.GONE);
+                dietaryCategory.clear();
+                dietaryCategory.add("None");
+                UncheckCheckBOx();
+            }
+        });
+
+        // Set up individual checkbox listeners
+        setUpCheckBoxListener(veganCheckBox, dietaryCategory, "Vegan");
+        setUpCheckBoxListener(vegetarianCheckBox, dietaryCategory, "Vegetarian");
+        setUpCheckBoxListener(glutenFreeCheckBox, dietaryCategory, "Gluten Free");
+        setUpCheckBoxListener(dairyFreeCheckBox, dietaryCategory, "Dairy Free");
+        setUpCheckBoxListener(nutFreeCheckBox, dietaryCategory, "Nut Free");
+    }
+
+    private void setUpCheckBoxListener(CheckBox checkBox, List<String> dietaryCategory, String category) {
+        checkBox.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                if (!dietaryCategory.contains(category)) {
+                    dietaryCategory.add(category);
+                }
+            } else {
+                dietaryCategory.remove(category);
+            }
+        });
+    }
+
+
+
+    private void UncheckCheckBOx(){
+        veganCheckBox.setChecked(false);
+        vegetarianCheckBox.setChecked(false);
+        dairyFreeCheckBox.setChecked(false);
+        nutFreeCheckBox.setChecked(false);
+        glutenFreeCheckBox.setChecked(false);
+    }
+
+
+
 }
+
