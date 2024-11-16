@@ -22,7 +22,7 @@ import retrofit2.Retrofit;
 public class Homepage extends AppCompatActivity {
 
     private RecyclerView recipesRecycle;
-    private RecipeAdapter recipeAdapter;
+    private com.example.letscook.RecipeAdapter recipeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +50,7 @@ public class Homepage extends AppCompatActivity {
                     Root root = response.body();
                     if (root != null && root.recipes != null) {
                         ArrayList<Recipe> recipes = root.recipes;
-                        recipeAdapter = new RecipeAdapter(recipes);
+                        recipeAdapter = new com.example.letscook.RecipeAdapter(recipes);
                         recipesRecycle.setAdapter(recipeAdapter);
                     } else {
                         Toast.makeText(Homepage.this, "Error: " + response.message(), Toast.LENGTH_SHORT).show();
