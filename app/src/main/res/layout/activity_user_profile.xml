@@ -63,8 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="16dp">
+        android:gravity="center">
 
         <!-- Follow Block -->
         <LinearLayout
@@ -202,7 +201,7 @@
                 android:layout_marginEnd="12dp">
 
                 <ImageButton
-                    android:id="@+id/btnSettings"
+                    android:id="@+id/btnSetting"
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:src="@drawable/settings"
@@ -214,7 +213,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Settings"
+                    android:text="Setting"
                     android:textSize="15sp"
                     android:textColor="@color/black"
                     android:textStyle="bold"/>
