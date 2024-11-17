@@ -1,6 +1,7 @@
 package com.example.letscook.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import com.bumptech.glide.Glide;
 import com.example.letscook.Database;
 import com.example.letscook.Models.Recipe;
 import com.example.letscook.R;
+import com.example.letscook.RecipeView;
 
 import java.util.List;
 
@@ -54,7 +56,6 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
                 Toast.makeText(context, "Error loading image", Toast.LENGTH_SHORT).show();
             }
         });
-
     }
 
     @Override
@@ -77,7 +78,9 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context, recipeNameTV + " by " + authorTV, Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(context, RecipeView.class);
+                    intent.putExtra("recipeId", recipes.get(getAdapterPosition()).getId());
+                    context.startActivity(intent);
                 }
             });
         }

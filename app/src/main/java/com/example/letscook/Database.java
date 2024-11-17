@@ -37,7 +37,7 @@ public class Database {
     }
 
     public static void addRecipe(Recipe recipe) {
-        recipesRef.child(recipe.getName()).setValue(recipe);
+        recipesRef.child(recipe.getId()).setValue(recipe);
     }
 
     public static void getRecipes(RecipesCallback callback) {
@@ -59,6 +59,32 @@ public class Database {
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
                 Log.e("FirebaseError", "Error retrieving recipes", error.toException());
+            }
+        });
+    }
+    public static void getRecipe(String recipeId, RecipeCallback callback) {
+        if (recipeId == null || recipeId.isEmpty()) {
+            Log.e("DatabaseError", "Invalid recipe ID");
+            callback.onCallback(null);
+            return;
+        }
+
+        recipesRef.child(recipeId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Recipe recipe = snapshot.getValue(Recipe.class);
+                    callback.onCallback(recipe);
+                } else {
+                    Log.e("DatabaseError", "Recipe not found for ID: " + recipeId);
+                    callback.onCallback(null);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("DatabaseError", "Error retrieving recipe: " + error.getMessage());
+                callback.onCallback(null);
             }
         });
     }
@@ -98,6 +124,10 @@ public class Database {
    public interface UrlCallback {
        void onUrlLoaded(String url);
        void onError(Exception e);
+   }
+
+   public interface RecipeCallback {
+       void onCallback(Recipe recipe);
    }
 
     public interface RecipesCallback {

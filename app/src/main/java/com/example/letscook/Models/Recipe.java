@@ -5,6 +5,7 @@ import java.util.UUID;
 
 //Recipe class defines a single recipe including ingredients, steps, and recipe image
 public class Recipe {
+    private String id;
     private String name;
     private String author;
     private String description;
@@ -17,6 +18,7 @@ public class Recipe {
     public Recipe(){}
 
     public Recipe(String name, String author, String description, List<RecipeIngredient> ingredients, List<String> steps, RecipeCategory recipeCategory , List<String> dietaryCategory){
+        this.id = UUID.randomUUID().toString();
         this.name = name;
         this.author = author;
         this.description = description;
@@ -25,6 +27,10 @@ public class Recipe {
         this.steps = steps;
         this.recipeCategory = recipeCategory;
         this.dietaryCategory = dietaryCategory;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -55,10 +61,6 @@ public class Recipe {
         return imageId;
     }
 
-    public void setImageId(String imageId) {
-        this.imageId = imageId;
-    }
-
     public List<RecipeIngredient> getIngredients() {
         return ingredients;
     }
@@ -74,6 +76,7 @@ public class Recipe {
     public void setSteps(List<String> steps) {
         this.steps = steps;
     }
+
     public RecipeCategory getRecipeCategory() {return recipeCategory;}
 
     public void setRecipeCategory(RecipeCategory recipeCategory) {this.recipeCategory = recipeCategory;}

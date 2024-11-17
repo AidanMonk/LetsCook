@@ -49,20 +49,32 @@ public class RecipeIngredient {
     }
 
     public String measurementToString() {
-        if (this.quantity <= 1) {
+
+        if (quantity > 1) {
+            return measurement.toString().toLowerCase();
+        } else {
+            // Handles all cases where quantity is 1 or less.
             return measurement.toString().toLowerCase().substring(0, measurement.toString().length() - 1);
         }
-        else{
-            return measurement.toString().toLowerCase();
-        }
     }
+
     @Override
-    public String toString(){
-        if (this.measurement == Measurement.UNITS){
-            return quantity + " " + fraction.toString() + " " + ingredient.getName();
+    public String toString() {
+        if (this.quantity == 0){
+            //don't show quantity and change fraction display
+            if (this.measurement == Measurement.UNITS) {
+                return fraction.altToString() + " " + ingredient.getName();
+            } else {
+                return fraction.altToString() + " " + measurementToString() + " of " + ingredient.getName();
+            }
         }
         else{
-            return quantity + " " + fraction.toString() + " " + measurementToString() + " of " + ingredient.getName();
+            //show quantity
+            if (this.measurement == Measurement.UNITS) {
+                return quantity + fraction.toString() + " " + ingredient.getName();
+            } else {
+                return quantity + fraction.toString() + " " + measurementToString() + " of " + ingredient.getName();
+            }
         }
     }
 

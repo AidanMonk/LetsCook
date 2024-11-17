@@ -15,8 +15,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.letscook.Adapters.RecipeIngredientAdapter;
-import com.example.letscook.Adapters.RecipeStepsAdapter;
+import com.example.letscook.Adapters.RecipeIngredientAdapter1;
+import com.example.letscook.Adapters.RecipeStepsAdapter1;
 import com.example.letscook.Exceptions.InvalidDietaryException;
 import com.example.letscook.Exceptions.InvalidRecipeDescException;
 import com.example.letscook.Exceptions.InvalidRecipeIngredientException;
@@ -59,8 +59,8 @@ public class CreateRecipe extends AppCompatActivity {
     int maxRecipeDescLength = 500;
 
     // Adapters and Data Lists
-    RecipeIngredientAdapter recipeIngredientAdapter;
-    RecipeStepsAdapter recipeStepsAdapter;
+    RecipeIngredientAdapter1 recipeIngredientAdapter1;
+    RecipeStepsAdapter1 recipeStepsAdapter1;
     List<RecipeIngredient> recipeIngredients = new ArrayList<>();
     List<String> recipeSteps = new ArrayList<>();
     List<String> dietaryCategory = new ArrayList<>();
@@ -104,7 +104,6 @@ public class CreateRecipe extends AppCompatActivity {
                 //set the recipe category (spinner)
                 RecipeCategory selectedRecipeCategory = RecipeCategory.valueOf(recipeCategorySpinner.getSelectedItem().toString().toUpperCase());
                 validateRecipeFields(recipeName, recipeDesc);
-
 
                 Recipe newRecipe = new Recipe(recipeName, author, recipeDesc, recipeIngredients, recipeSteps, selectedRecipeCategory, dietaryCategory);
 
@@ -175,13 +174,13 @@ public class CreateRecipe extends AppCompatActivity {
     }
 
     private void setupAdapters() {
-        recipeIngredientAdapter = new RecipeIngredientAdapter(this, recipeIngredients);
+        recipeIngredientAdapter1 = new RecipeIngredientAdapter1(this, recipeIngredients);
         ingredientsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ingredientsRecyclerView.setAdapter(recipeIngredientAdapter);
+        ingredientsRecyclerView.setAdapter(recipeIngredientAdapter1);
 
-        recipeStepsAdapter = new RecipeStepsAdapter(this, recipeSteps);
+        recipeStepsAdapter1 = new RecipeStepsAdapter1(this, recipeSteps);
         stepsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        stepsRecyclerView.setAdapter(recipeStepsAdapter);
+        stepsRecyclerView.setAdapter(recipeStepsAdapter1);
 
         addIngredientBtn.setOnClickListener(v -> addIngredient());
         addStepBtn.setOnClickListener(v -> addStep());
@@ -193,20 +192,30 @@ public class CreateRecipe extends AppCompatActivity {
             if (ingredientET.getText().toString().isEmpty()) {
                 throw new InvalidRecipeIngredientException("Ingredient cannot be empty");
             }
+            int quantity;
+            if (quantityET.getText().toString().isEmpty()) {
+                quantity = 0;
+            }
+            else{
+                quantity = Integer.parseInt(quantityET.getText().toString());
+            }
 
-            int quantity = Integer.parseInt(quantityET.getText().toString());
             Measurement measurement = Measurement.valueOf(measurementSpinner.getSelectedItem().toString().toUpperCase());
             Fraction fraction = Fraction.fromString(fractionSpinner.getSelectedItem().toString());
-            Ingredient ingredient = new Ingredient(ingredientET.getText().toString(), IngredientCategory.GRAIN); // Hardcoded category
 
+            if (quantity <= 0 && fraction == Fraction.NONE){
+                throw new InvalidRecipeIngredientException("Quantity must be input");
+            }
+
+            Ingredient ingredient = new Ingredient(ingredientET.getText().toString(), IngredientCategory.GRAIN); // Hardcoded category
             recipeIngredients.add(new RecipeIngredient(ingredient, quantity, fraction, measurement));
-            recipeIngredientAdapter.notifyItemInserted(recipeIngredients.size() - 1);
+            recipeIngredientAdapter1.notifyItemInserted(recipeIngredients.size() - 1);
 
             quantityET.setText("");
             ingredientET.setText("");
             measurementSpinner.setSelection(0);
         } catch (NumberFormatException e) {
-            Toast.makeText(this, "Quantity must be an integer", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Quantity must be input", Toast.LENGTH_SHORT).show();
         } catch (InvalidRecipeIngredientException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
@@ -219,7 +228,7 @@ public class CreateRecipe extends AppCompatActivity {
                 throw new InvalidRecipeStepException("Step cannot be empty");
             }
             recipeSteps.add(stepText);
-            recipeStepsAdapter.notifyItemInserted(recipeSteps.size() - 1);
+            recipeStepsAdapter1.notifyItemInserted(recipeSteps.size() - 1);
             enterStepET.setText("");
         } catch (InvalidRecipeStepException e) {
             Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -269,8 +278,8 @@ public class CreateRecipe extends AppCompatActivity {
         imagePreview.setImageDrawable(null);
         imagePreview.setVisibility(View.GONE);
         imageAddBtn.setText("add image");
-        recipeIngredientAdapter.notifyDataSetChanged();
-        recipeStepsAdapter.notifyDataSetChanged();
+        recipeIngredientAdapter1.notifyDataSetChanged();
+        recipeStepsAdapter1.notifyDataSetChanged();
         checkBoxLayout.setVisibility(View.GONE);
         dietaryRadioGroup.clearCheck();
         recipeCategorySpinner.setSelection(0);
@@ -278,8 +287,6 @@ public class CreateRecipe extends AppCompatActivity {
 
 
     }
-
-
 
     private void getDietaryCategories()  {
         checkBoxLayout.setVisibility(View.GONE);
