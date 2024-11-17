@@ -41,6 +41,7 @@ dependencies {
     implementation("org.apache.commons:commons-math3:3.6.1")
     implementation(libs.firebase.storage)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.auth)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

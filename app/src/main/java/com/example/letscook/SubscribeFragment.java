@@ -24,7 +24,7 @@ public class SubscribeFragment extends Fragment {
 
         Button subscribeButton = view.findViewById(R.id.subscribeButton);
         subscribeButton.setOnClickListener(v -> {
-            Toast.makeText(getContext(), "Please have your credit card on you side!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please have your credit card on you side :)", Toast.LENGTH_SHORT).show();
         });
 
         return view;
