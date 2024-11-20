@@ -19,7 +19,7 @@ import com.example.letscook.Adapters.RecipeListAdapter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SearchResultsView extends AppCompatActivity {
+public class SearchResultsView extends Base_activity {
     private RecyclerView recipeListRecycler;
     private RecipeSearchListAdapter recipeListAdapter;
     TextView noResultsTV;

@@ -36,7 +36,7 @@ import com.example.letscook.Models.RecipeCategory;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CreateRecipe extends AppCompatActivity {
+public class CreateRecipe extends Base_activity {
 
     // UI components
     EditText recipeNameET, recipeDescET, quantityET, ingredientET, enterStepET;
@@ -87,8 +87,9 @@ public class CreateRecipe extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_create_recipe);
-
+        //setContentView(R.layout.activity_create_recipe);
+        getLayoutInflater().inflate(R.layout.activity_create_recipe, findViewById(R.id.frame_layout));
+        EdgeToEdge.enable(this);
         initializeViews();
         setupAdapters();
         setupActionListeners();

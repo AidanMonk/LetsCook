@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.letscook.Adapters.RecipeListAdapter;
 
-public class FeaturedView extends AppCompatActivity {
+public class FeaturedView extends Base_activity {
 
     SearchView searchView;
     RecyclerView featuredRecipesRecyclerView;
@@ -20,7 +20,8 @@ public class FeaturedView extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_featured_view);
+        getLayoutInflater().inflate(R.layout.activity_featured_view, findViewById(R.id.frame_layout));
+        EdgeToEdge.enable(this);
 
         searchView = findViewById(R.id.searchView);
         featuredRecipesRecyclerView = findViewById(R.id.featuredRecipesRecyclerView);

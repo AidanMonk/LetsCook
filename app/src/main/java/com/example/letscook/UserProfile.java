@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfile extends Base_activity {
 
     private ImageButton btnRecipe, btnSetting, btnSubscribe;
 
