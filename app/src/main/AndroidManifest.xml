@@ -15,6 +15,9 @@
         android:theme="@style/Theme.LetsCook"
         tools:targetApi="31">
         <activity
+            android:name=".SearchResultsView"
+            android:exported="false" />
+        <activity
             android:name=".RecipeView"
             android:exported="false" />
         <activity
@@ -28,7 +31,8 @@
         </activity>
         <activity
             android:name=".FeaturedView"
-            android:exported="false" />
+            android:exported="false"
+            android:launchMode="singleTop"/>
         <activity
             android:name=".UserProfile"
             android:exported="false" />
@@ -40,9 +44,6 @@
             android:exported="false" />
         <activity
             android:name=".Homepage"
-            android:exported="false" />
-        <activity
-            android:name=".Adapters.RecipeAdapter"
             android:exported="false" />
         <activity
             android:name=".RecipesApi"

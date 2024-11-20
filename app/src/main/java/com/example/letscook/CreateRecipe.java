@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.*;
 
 import androidx.activity.EdgeToEdge;
@@ -90,6 +91,7 @@ public class CreateRecipe extends AppCompatActivity {
 
         initializeViews();
         setupAdapters();
+        setupActionListeners();
         //to populate the dietaryTags
         getDietaryCategories();
 
@@ -126,6 +128,42 @@ public class CreateRecipe extends AppCompatActivity {
         });
     }
 
+    private void setupActionListeners() {
+        //set up listeners to change the edit text focus every time a field is entered
+
+        recipeNameET.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                recipeDescET.requestFocus(); // Set focus to the next EditText
+                return true;
+            }
+            return false;
+        });
+
+        recipeDescET.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                quantityET.requestFocus(); // Set focus to the next EditText
+                return true;
+            }
+            return false;
+        });
+
+        quantityET.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                ingredientET.requestFocus(); // Set focus to the next EditText
+                return true;
+            }
+            return false;
+        });
+
+        ingredientET.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_NEXT) {
+                enterStepET.requestFocus(); // Set focus to the next EditText
+                return true;
+            }
+            return false;
+        });
+    }
+
     private void openGallery() {
         Intent intent = new Intent(Intent.ACTION_PICK);
         intent.setType("image/*");
@@ -155,7 +193,7 @@ public class CreateRecipe extends AppCompatActivity {
 
         //layout
         checkBoxLayout = findViewById(R.id.layoutCheckBoxes);
-        //checbix
+        //checkboxes
         veganCheckBox = findViewById(R.id.veganCheckbox);
         vegetarianCheckBox = findViewById(R.id.vegeterianCheckbox);
         glutenFreeCheckBox = findViewById(R.id.glutenFreeCheckbox);
@@ -167,10 +205,6 @@ public class CreateRecipe extends AppCompatActivity {
         measurementSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Measurement.getMeasurementStrings()));
         fractionSpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, Fraction.getFractionStrings()));
         recipeCategorySpinner.setAdapter(new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, RecipeCategory.getRecipeCategoryStrings()));
-
-        //radipo button and initialize the checkboxes value
-
-
     }
 
     private void setupAdapters() {

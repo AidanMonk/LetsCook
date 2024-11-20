@@ -62,6 +62,7 @@ public class Database {
             }
         });
     }
+
     public static void getRecipe(String recipeId, RecipeCallback callback) {
         if (recipeId == null || recipeId.isEmpty()) {
             Log.e("DatabaseError", "Invalid recipe ID");
