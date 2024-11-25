@@ -1,5 +1,6 @@
 package com.example.letscook;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.content.SharedPreferences;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +25,14 @@ public class LoginView extends AppCompatActivity {
     EditText usernameL, password;
     DatabaseReference reference;
     TextView signup;
+    SharedPreferences sharedPreferences;
+    SharedPreferences.Editor editor;
+    public static final String PREFERENCES_NAME = "UserSession";
+    public static final String KEY_USERNAME = "username";
+    public static final String KEY_FIRST_NAME = "firstName";
+    public static final String KEY_LAST_NAME = "lastName";
+    public static final String KEY_EMAIL = "email";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,6 +43,10 @@ public class LoginView extends AppCompatActivity {
         password = findViewById(R.id.edtpasswordL);
         signup = findViewById(R.id.txtSignUp);
         reference = FirebaseDatabase.getInstance().getReference("users");
+
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE);
+        editor = sharedPreferences.edit();
 
         login.setOnClickListener(v -> {
             if (validateInputs()) {
@@ -72,6 +86,19 @@ public class LoginView extends AppCompatActivity {
 
                                 if (storedPassword != null && storedPassword.equals(password.getText().toString())) {
                                     // Login successful -> main activity
+                                    //getting the value from the database
+                                    String username = userSnapshot.child("username").getValue(String.class);
+                                    String firstName = userSnapshot.child("firstName").getValue(String.class);
+                                    String lastName = userSnapshot.child("lastName").getValue(String.class);
+                                    String email = userSnapshot.child("email").getValue(String.class);
+
+                                    //store the data in shared preferences
+                                    editor.putString(KEY_USERNAME, username);
+                                    editor.putString(KEY_FIRST_NAME, firstName);
+                                    editor.putString(KEY_LAST_NAME, lastName);
+                                    editor.putString(KEY_EMAIL, email);
+                                    editor.apply();
+
                                     Toast.makeText(LoginView.this, "Login successful", Toast.LENGTH_SHORT).show();
                                     startActivity(new Intent(LoginView.this, CreateRecipe.class)); // Change HomeActivity to your main screen
                                     finish();
