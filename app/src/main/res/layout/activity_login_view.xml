@@ -29,14 +29,15 @@
         android:textSize="30dp"
         android:gravity="center"
         android:layout_marginTop="30dp"
-        android:text="Password"/>
+        android:text="Password" />
 
     <EditText
         android:id="@+id/edtpasswordL"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:textSize="30dp"
-        android:hint="Enter your Password"/>
+        android:hint="Enter your Password"
+        android:inputType="textPassword"/>
 
     <Button
         android:id="@+id/btnlogin"
