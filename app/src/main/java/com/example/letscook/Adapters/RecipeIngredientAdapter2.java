@@ -15,11 +15,15 @@ import com.example.letscook.R;
 
 import java.util.List;
 
-public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredientAdapter.RecipeIngredientViewHolder> {
+/***********************
+ * Adapter meant to display a list of recipe ingredients, for use on the recipe view page
+ */
+
+public class RecipeIngredientAdapter2 extends RecyclerView.Adapter<RecipeIngredientAdapter2.RecipeIngredientViewHolder> {
     Context context;
     List<RecipeIngredient> recipeIngredients;
 
-    public RecipeIngredientAdapter(Context context, List<RecipeIngredient> recipeIngredients) {
+    public RecipeIngredientAdapter2(Context context, List<RecipeIngredient> recipeIngredients) {
         this.context = context;
         this.recipeIngredients = recipeIngredients;
     }
@@ -27,14 +31,14 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
     @NonNull
     @Override
     public RecipeIngredientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_ingredient_input, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recipe_ingredient_view, parent, false);
 
         return new RecipeIngredientViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecipeIngredientViewHolder holder, int position) {
-        holder.recipeTV.setText(String.valueOf(recipeIngredients.get(position).toString()));
+        holder.ingredientTV.setText(String.valueOf(recipeIngredients.get(position).toString()));
     }
 
     @Override
@@ -43,22 +47,12 @@ public class RecipeIngredientAdapter extends RecyclerView.Adapter<RecipeIngredie
     }
 
     public class RecipeIngredientViewHolder extends RecyclerView.ViewHolder {
-        Button removeIngredientBtn;
-        TextView recipeTV;
+        TextView ingredientTV;
 
         public RecipeIngredientViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            removeIngredientBtn = itemView.findViewById(R.id.removeIngredientBtn);
-            recipeTV = itemView.findViewById(R.id.recipeTV);
-
-            removeIngredientBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    recipeIngredients.remove(getAdapterPosition());
-                    notifyItemRemoved(getAdapterPosition());
-                }
-            });
+            ingredientTV = itemView.findViewById(R.id.ingredientTV);
         }
     }
 }

@@ -1,24 +1,40 @@
 package com.example.letscook;
 
 import android.os.Bundle;
+import android.widget.ImageButton;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 
-public class UserProfile extends AppCompatActivity {
+public class UserProfile extends Base_activity {
+
+    private ImageButton btnRecipe, btnSetting, btnSubscribe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_user_profile);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
+
+        // Initialize buttons
+        btnRecipe = findViewById(R.id.btnRecipe);
+        btnSetting = findViewById(R.id.btnSetting);
+        btnSubscribe = findViewById(R.id.btnSubscribe);
+
+        // Set default fragment
+        loadFragment(new RecipeFragment());
+
+        // Set button click listeners
+        btnRecipe.setOnClickListener(view -> loadFragment(new RecipeFragment()));
+        btnSetting.setOnClickListener(view -> loadFragment(new SettingFragment()));
+        btnSubscribe.setOnClickListener(view -> loadFragment(new SubscribeFragment()));
+    }
+
+    // Method to replace the current fragment
+    private void loadFragment(Fragment fragment) {
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.userProfileFragmentContainer, fragment)
+                .commit();
     }
 }

@@ -4,14 +4,14 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".UserProfile"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+     >
 
-    <!--Return button gose here. But image button not working, and color too-->
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:gravity="center_vertical">
 
-        <!-- User hsagdas basic info -->
+        <!-- User basic info -->
         <ImageView
             android:id="@+id/headPortrait"
             android:layout_width="100dp"
@@ -27,7 +27,8 @@
             android:contentDescription="User Avatar"
             android:scaleType="centerCrop"
             android:layout_marginEnd="16dp"
-            />
+            android:src="@drawable/avatar1" />
+
 
         <!-- Vertical layout for username and title -->
         <LinearLayout
@@ -42,7 +43,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Username"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="4dp" />
 
@@ -62,8 +63,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center"
-        android:padding="16dp">
+        android:gravity="center">
 
         <!-- Follow Block -->
         <LinearLayout
@@ -149,98 +149,110 @@
 
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        >
-
-        <!-- Email Label -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Email:"
-            android:layout_marginEnd="8dp" />
-
-        <!-- Email Input Field -->
-        <EditText
-            android:id="@+id/email"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:hint="Enter your email" />
-
-        <!-- Change Password Button -->
-        <Button
-            android:id="@+id/changePasswordButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="modify"
-            android:textSize="12sp"
-            android:padding="4dp"/>
-    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        >
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <!-- Email Label -->
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Code:"
-            android:layout_marginEnd="8dp" />
-
-        <!-- Email Input Field -->
-        <EditText
-            android:id="@+id/userCode"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginEnd="8dp"
-            android:hint="Enter your email" />
-
-        <!-- Change Password Button -->
-        <Button
-            android:id="@+id/changeCodeButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="modify"
-            android:textSize="12sp"
-            android:padding="4dp"/>
-    </LinearLayout>
-
-
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="My recipe"/>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/UserpageRecipeRV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-
-        <Button
+        <!-- 导航栏 -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:text="Become our premium member"
-            />
-    </RelativeLayout>
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <!-- RECIPE -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginEnd="12dp"
+                >
+
+                <ImageButton
+                    android:id="@+id/btnRecipe"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/recipe"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="My Recipes"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="My recipes"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <!-- Setting -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginEnd="12dp">
+
+                <ImageButton
+                    android:id="@+id/btnSetting"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/settings"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Settings"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Setting"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+
+            <!-- Subscribe -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/btnSubscribe"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:src="@drawable/premium"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="Subscribe"
+                    android:scaleType="centerCrop" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="Subscribe"
+                    android:textSize="15sp"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- Fragment!!!!!!!!  -->
+        <FrameLayout
+            android:id="@+id/userProfileFragmentContainer"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </LinearLayout>
+
 
 </LinearLayout>
