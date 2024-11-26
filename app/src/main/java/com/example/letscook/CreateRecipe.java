@@ -2,6 +2,7 @@ package com.example.letscook;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -66,6 +67,13 @@ public class CreateRecipe extends Base_activity {
     List<String> recipeSteps = new ArrayList<>();
     List<String> dietaryCategory = new ArrayList<>();
 
+    // SharedPreferences
+    SharedPreferences sharedPreferences;
+    public static final String PREFERENCES_NAME = "UserSession";
+    public static final String KEY_EMAIL = "email";
+    public static final String KEY_PREMIUM = "premium";
+    public static final String KEY_USERNAME = "username";
+
     //create gallery launcher to handle image selection
     private ActivityResultLauncher<Intent> galleryLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -86,6 +94,7 @@ public class CreateRecipe extends Base_activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = getSharedPreferences(LoginView.PREFERENCES_NAME, MODE_PRIVATE);
         EdgeToEdge.enable(this);
         //setContentView(R.layout.activity_create_recipe);
         getLayoutInflater().inflate(R.layout.activity_create_recipe, findViewById(R.id.frame_layout));
@@ -102,7 +111,14 @@ public class CreateRecipe extends Base_activity {
             try {
                 String recipeName = recipeNameET.getText().toString();
                 String recipeDesc = recipeDescET.getText().toString();
-                String author = "dummy user";
+                String author = sharedPreferences.getString(LoginView.KEY_USERNAME, "unknown");
+
+                // shared ref
+                // Retrieve current user details
+                String username = sharedPreferences.getString(LoginView.KEY_USERNAME, "unknown");
+               // boolean isPremium = sharedPreferences.getBoolean(LoginView.KEY_PREMIUM, false);
+                String emailKey = sharedPreferences.getString(LoginView.KEY_EMAIL, "").replace(".", ",");
+
 
                 //set the recipe category (spinner)
                 RecipeCategory selectedRecipeCategory = RecipeCategory.valueOf(recipeCategorySpinner.getSelectedItem().toString().toUpperCase());
@@ -113,13 +129,19 @@ public class CreateRecipe extends Base_activity {
                 //upload the selected image once the recipe is added
                 uploadImage(newRecipe.getImageId(), selectedImageUri);
 
-                //add the recipe to the database
-                Database.addRecipe(newRecipe);
+                DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(emailKey);
+                //Add the recipe under the user.
+                userRef.child("recipes").child(newRecipe.getId()).setValue(newRecipe)
+                        .addOnSuccessListener(aVoid -> {
+                            // Add recipe to common database if successful
+                             Database.addRecipe(newRecipe);
+                             Toast.makeText(CreateRecipe.this, "Recipe added!", Toast.LENGTH_SHORT).show();
+                             clearRecipeFields();
+                        })
+                        .addOnFailureListener(e -> {
+                            Toast.makeText(CreateRecipe.this, "Failed to add recipe: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                        });
 
-                Toast.makeText(this, "Recipe added!", Toast.LENGTH_SHORT).show();
-
-                // Clear fields and reset adapters
-                clearRecipeFields();
             } catch (InvalidRecipeNameException | InvalidRecipeDescException | InvalidDietaryException|
                      InvalidRecipeIngredientException | InvalidRecipeStepException e) {
                 Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
