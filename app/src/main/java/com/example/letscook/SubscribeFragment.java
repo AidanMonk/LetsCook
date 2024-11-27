@@ -22,103 +22,154 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class SubscribeFragment extends Fragment {
-
-    CheckBox agreeCheckBox;
-    Button subscribeButton, cancelSubscribeButton;
-    DatabaseReference userRef;
-    SharedPreferences sharedPreferences;
-    String loggedInEmail;
+     CheckBox agreeCheckBox;
+     Button subscribeButton, cancelSubscribeButton;
+     SharedPreferences sharedPreferences;
+     DatabaseReference userRef;
+     String userEmail;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_subscribe, container, false);
 
+        // Initialize SharedPreferences using the same name as in LoginView
+        sharedPreferences = requireActivity().getSharedPreferences(LoginView.PREFERENCES_NAME, Context.MODE_PRIVATE);
 
+        // Initialize Firebase Database
+        userRef = FirebaseDatabase.getInstance().getReference("users");
+
+        // Find UI elements
         agreeCheckBox = view.findViewById(R.id.agreeCheckBox);
         subscribeButton = view.findViewById(R.id.subscribeButton);
         cancelSubscribeButton = view.findViewById(R.id.cancelSubscribeButton);
 
-        // Initialization Firebase Database
-        userRef = FirebaseDatabase.getInstance().getReference("users");
+        userEmail = sharedPreferences.getString(LoginView.KEY_EMAIL, null);
 
-        // get SharedPreferences user's email
-        sharedPreferences = getActivity().getSharedPreferences(LoginView.PREFERENCES_NAME, Context.MODE_PRIVATE);
-        loggedInEmail = sharedPreferences.getString(LoginView.KEY_EMAIL, null);
-
-        // verify user login status
-        if (TextUtils.isEmpty(loggedInEmail)) {
-            Toast.makeText(getContext(), "No user logged in", Toast.LENGTH_SHORT).show();
+        // Check if user is logged in
+        if (userEmail == null) {
+            Toast.makeText(getContext(), "Please log in first", Toast.LENGTH_SHORT).show();
             return view;
         }
 
-        // Checking the agreement check box to subscribe
+        // Set up subscription listeners
+        setupSubscriptionListeners();
+
+        // Initial check of subscription status
+        checkSubscriptionStatus();
+
+        return view;
+    }
+
+    private void setupSubscriptionListeners() {
+        // Subscribe button logic
         subscribeButton.setOnClickListener(v -> {
             if (agreeCheckBox.isChecked()) {
-                updateSubscriptionStatus(true); // set premium as true
+                updateSubscriptionStatus(true);
             } else {
                 Toast.makeText(getContext(), "Please agree to the Terms and Conditions", Toast.LENGTH_SHORT).show();
             }
         });
 
-
-        //Cancel the subscribe
-        cancelSubscribeButton.setOnClickListener(v -> checkAndCancelSubscription());
-
-        return view;
+        // Cancel subscription button logic
+        cancelSubscribeButton.setOnClickListener(v -> updateSubscriptionStatus(false));
     }
 
-
-    //Upload subscribe status
     private void updateSubscriptionStatus(boolean isSubscribed) {
-        userRef.orderByChild("email").equalTo(loggedInEmail).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        userSnapshot.getRef().child("premium").setValue(isSubscribed)
-                                .addOnSuccessListener(aVoid -> {
-                                    String message = isSubscribed ? "Subscribed successfully!" : "Subscription cancelled successfully!";
-                                    Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
-                                })
-                                .addOnFailureListener(e -> Toast.makeText(getContext(), "Failed to update subscription: " + e.getMessage(), Toast.LENGTH_SHORT).show());
-                    }
-                } else {
-                    Toast.makeText(getContext(), "User data not found", Toast.LENGTH_SHORT).show();
-                }
-            }
+        if (userEmail == null) {
+            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
+        // Query to find user by email (considering the "." to "," replacement)
+        userRef.orderByChild("email").equalTo(userEmail.replace(",", "."))
+                .addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if (snapshot.exists()) {
+                            for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                                // Update premium status in Firebase
+                                userSnapshot.getRef().child("premium").setValue(isSubscribed)
+                                        .addOnSuccessListener(aVoid -> {
+                                            // Update SharedPreferences
+                                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                                            editor.putBoolean(LoginView.KEY_PREMIUM, isSubscribed);
+                                            editor.apply();
 
+                                            // Update UI
+                                            updateSubscriptionUI(isSubscribed);
 
-    //Checking subscribe status and CANCEL it!
-    private void checkAndCancelSubscription() {
-        userRef.orderByChild("email").equalTo(loggedInEmail).addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (snapshot.exists()) {
-                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
-                        Boolean isPremium = userSnapshot.child("premium").getValue(Boolean.class);
-                        if (isPremium != null && isPremium) {
-                            updateSubscriptionStatus(false); //setting premium as false
+                                            // Show success message
+                                            String message = isSubscribed
+                                                    ? "Subscribed successfully!"
+                                                    : "Subscription cancelled successfully!";
+                                            Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                                        })
+                                        .addOnFailureListener(e -> {
+                                            Toast.makeText(getContext(),
+                                                    "Failed to update subscription: " + e.getMessage(),
+                                                    Toast.LENGTH_SHORT).show();
+                                        });
+                            }
                         } else {
-                            Toast.makeText(getContext(), "You are not subscribed. Cannot cancel.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "User not found", Toast.LENGTH_SHORT).show();
                         }
                     }
-                } else {
-                    Toast.makeText(getContext(), "User data not found", Toast.LENGTH_SHORT).show();
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Database error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                        Toast.makeText(getContext(),
+                                "Database error: " + error.getMessage(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    private void checkSubscriptionStatus() {
+        // Check subscription status from SharedPreferences first
+        boolean isPremium = sharedPreferences.getBoolean(LoginView.KEY_PREMIUM, false);
+        updateSubscriptionUI(isPremium);
+
+        // Verify and sync with Firebase
+        if (userEmail != null) {
+            userRef.orderByChild("email").equalTo(userEmail.replace(",", "."))
+                    .addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if (snapshot.exists()) {
+                                for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                                    Boolean firebasePremiumStatus =
+                                            userSnapshot.child("premium").getValue(Boolean.class);
+
+                                    // Ensure local SharedPreferences matches Firebase
+                                    if (firebasePremiumStatus != null &&
+                                            isPremium != firebasePremiumStatus) {
+
+                                        SharedPreferences.Editor editor = sharedPreferences.edit();
+                                        editor.putBoolean(LoginView.KEY_PREMIUM, firebasePremiumStatus);
+                                        editor.apply();
+
+                                        updateSubscriptionUI(firebasePremiumStatus);
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                        }
+                    });
+        }
+    }
+
+    private void updateSubscriptionUI(boolean isPremium) {
+        // Toggle visibility of subscribe and cancel buttons
+        subscribeButton.setVisibility(isPremium ? View.GONE : View.VISIBLE);
+        cancelSubscribeButton.setVisibility(isPremium ? View.VISIBLE : View.GONE);
+
+        if (!isPremium) {
+            agreeCheckBox.setChecked(false);
+        }
     }
 }

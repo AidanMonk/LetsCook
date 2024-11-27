@@ -1,7 +1,10 @@
 package com.example.letscook;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -10,6 +13,9 @@ import androidx.fragment.app.FragmentManager;
 public class UserProfile extends Base_activity {
 
     private ImageButton btnRecipe, btnSetting, btnSubscribe;
+    private TextView usernameTextView;
+    SharedPreferences sharedPreferences;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +26,15 @@ public class UserProfile extends Base_activity {
         btnRecipe = findViewById(R.id.btnRecipe);
         btnSetting = findViewById(R.id.btnSetting);
         btnSubscribe = findViewById(R.id.btnSubscribe);
+        usernameTextView = findViewById(R.id.userName);
+        // Initialize SharedPreferences
+        sharedPreferences = getSharedPreferences(LoginView.PREFERENCES_NAME, Context.MODE_PRIVATE);
+        // Set username
+        String username = sharedPreferences.getString(LoginView.KEY_USERNAME, "User");
+        usernameTextView.setText(username);
+
+
+
 
         // Set default fragment
         loadFragment(new RecipeFragment());

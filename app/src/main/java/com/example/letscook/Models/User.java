@@ -10,9 +10,6 @@ public class User {
     private String email;
     private String password;
     private List<String> recipes;
-
-
-
     private boolean isPremium;
 
     public User( String username,String firstName, String lastName, String email, String password){
