@@ -2,9 +2,11 @@ package com.example.letscook.Models;
 
 public enum Measurement {
     CUPS,
-    TABLESPOONS,
-    TEASPOONS,
-    UNITS;
+    TBSP,
+    TSP,
+    UNITS,
+    LBS,
+    G;
 
     public static String[] getMeasurementStrings() {
         Measurement[] measurements = Measurement.values();
@@ -20,12 +22,16 @@ public enum Measurement {
         switch (this) {
             case CUPS:
                 return "cups";
-            case TABLESPOONS:
-                return "tablespoons";
-            case TEASPOONS:
-                return "teaspoons";
+            case TBSP:
+                return "tbsp";
+            case TSP:
+                return "tsp";
             case UNITS:
                 return "units";
+            case LBS:
+                return "lbs";
+            case G:
+                return "g";
             default:
                 return "";
         }
