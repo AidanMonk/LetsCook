@@ -52,9 +52,12 @@ public class RecipeIngredient {
 
         if (quantity > 1) {
             return measurement.toString().toLowerCase();
-        } else {
-            // Handles all cases where quantity is 1 or less.
-            return measurement.toString().toLowerCase().substring(0, measurement.toString().length() - 1);
+        }
+        else if (measurement == Measurement.CUPS ){
+            return measurement.toString().toLowerCase().substring(0, measurement.toString().length() -1);
+        }
+        else{
+            return measurement.toString().toLowerCase().substring(0, measurement.toString().length());
         }
     }
 

@@ -1,5 +1,9 @@
 package com.example.letscook.Models;
 
+import com.example.letscook.EdamamApi.NutrientApiResponse;
+import com.example.letscook.EdamamApi.NutrientService;
+import com.example.letscook.EdamamApi.NutritionalInfo;
+
 import java.util.List;
 import java.util.UUID;
 
@@ -14,10 +18,12 @@ public class Recipe {
     private List<String> steps;
     private RecipeCategory recipeCategory;
     private List<String> dietaryCategory;
+    private int servings;
+    private NutritionalInfo nutritionalInfo;
 
     public Recipe(){}
 
-    public Recipe(String name, String author, String description, List<RecipeIngredient> ingredients, List<String> steps, RecipeCategory recipeCategory , List<String> dietaryCategory){
+    public Recipe(String name, String author, String description, List<RecipeIngredient> ingredients, List<String> steps, RecipeCategory recipeCategory , List<String> dietaryCategory, int servings, NutritionalInfo nutritionalInfo){
         this.id = UUID.randomUUID().toString();
         this.name = name;
         this.author = author;
@@ -27,6 +33,8 @@ public class Recipe {
         this.steps = steps;
         this.recipeCategory = recipeCategory;
         this.dietaryCategory = dietaryCategory;
+        this.servings = servings;
+        this.nutritionalInfo = nutritionalInfo;
     }
 
     public String getId() {
@@ -77,6 +85,22 @@ public class Recipe {
         this.steps = steps;
     }
 
+    public NutritionalInfo getNutritionalInfo() {
+        return nutritionalInfo;
+    }
+
+    public void setNutritionalInfo(NutritionalInfo nutritionalInfo) {
+        this.nutritionalInfo = nutritionalInfo;
+    }
+
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
+
     public RecipeCategory getRecipeCategory() {return recipeCategory;}
 
     public void setRecipeCategory(RecipeCategory recipeCategory) {this.recipeCategory = recipeCategory;}
@@ -85,5 +109,6 @@ public class Recipe {
 
     public void setDietaryCategory(List<String> dietaryCategory) {this.dietaryCategory = dietaryCategory;}
 
-
 }
+
+
