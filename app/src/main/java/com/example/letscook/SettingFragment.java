@@ -1,5 +1,7 @@
 package com.example.letscook;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -14,10 +16,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -26,19 +24,21 @@ import com.google.firebase.database.ValueEventListener;
 
 public class SettingFragment extends Fragment {
 
-    private EditText edtEmail, edtUsername, edtPassword;
-    private TextView txtFirstName, txtLastName, txtPremiumStatus;
-    private Button btnUpdate;
-    private DatabaseReference databaseReference; //Firebase data
-    private FirebaseUser firebaseUser;
+    EditText edtUsername, edtPassword;
+    TextView txtFirstName, txtLastName, txtPremiumStatus, txtEmail;
+    Button btnUpdate;
+    DatabaseReference userRef;
+
+    private SharedPreferences sharedPreferences;
+    private String loggedInEmail;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
 
-        // Initialize UI elements
-        edtEmail = view.findViewById(R.id.edtEmail);
+
+        txtEmail = view.findViewById(R.id.txtEmail);
         edtUsername = view.findViewById(R.id.edtUsername);
         edtPassword = view.findViewById(R.id.edtPassword);
         txtFirstName = view.findViewById(R.id.txtFirstName);
@@ -46,105 +46,103 @@ public class SettingFragment extends Fragment {
         txtPremiumStatus = view.findViewById(R.id.txtPremiumStatus);
         btnUpdate = view.findViewById(R.id.btnUpdate);
 
-        // Firebase initialization
-        databaseReference = FirebaseDatabase.getInstance().getReference("users");
-        firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+        // Firebase Initialization
+        userRef = FirebaseDatabase.getInstance().getReference("users");
 
-        // Load current user data
-        if (firebaseUser != null) {
-            loadUserData();
+        // SharedPreferences is a tool for storing small local data.
+        sharedPreferences = getActivity().getSharedPreferences(LoginView.PREFERENCES_NAME, Context.MODE_PRIVATE);
+        loggedInEmail = sharedPreferences.getString(LoginView.KEY_EMAIL, null);
+
+        // checking user login status
+        if (!TextUtils.isEmpty(loggedInEmail)) {
+            loadUserData(loggedInEmail);
+        } else {
+            Toast.makeText(getContext(), "No user logged in", Toast.LENGTH_SHORT).show();
         }
 
-        // Update user data
+        // update user data
         btnUpdate.setOnClickListener(v -> {
-            if (validateInputs())
-            {
-                updateUserData();
+            if (validateInputs()) {
+                updateUserData(loggedInEmail);
             }
         });
 
         return view;
     }
 
-    // Load user data method
-    private void loadUserData() {
-        String userId = firebaseUser.getUid();
-        databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+//get user data from fire base
+    private void loadUserData(String email) {
+        userRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
-                    String firstName = snapshot.child("firstName").getValue(String.class);
-                    String lastName = snapshot.child("lastName").getValue(String.class);
-                    String username = snapshot.child("username").getValue(String.class);
-                    String email = snapshot.child("email").getValue(String.class);
-                    boolean premium = snapshot.child("premium").getValue(Boolean.class);
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        // Extracting user data
+                        String firstName = userSnapshot.child("firstName").getValue(String.class);
+                        String lastName = userSnapshot.child("lastName").getValue(String.class);
+                        String username = userSnapshot.child("username").getValue(String.class);
+                        Boolean isPremium = userSnapshot.child("premium").getValue(Boolean.class);
 
-                    // Populate UI with user data
-                    txtFirstName.setText(firstName);
-                    txtLastName.setText(lastName);
-                    edtUsername.setText(username);
-                    edtEmail.setText(email);
-                    txtPremiumStatus.setText(premium ? "Premium User" : "Regular User");
+                        // renew UI
+                        txtFirstName.setText(firstName != null ? firstName : "N/A");
+                        txtLastName.setText(lastName != null ? lastName : "N/A");
+                        txtEmail.setText(email);
+                        txtPremiumStatus.setText(isPremium != null && isPremium ? "Premium User" : "Regular User");
+                        edtUsername.setText(username != null ? username : "");
+                    }
+                } else {
+                    Toast.makeText(getContext(), "User data not found", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(getContext(), "Failed to load user data", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Failed to load user data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }
 
-    // Verify that the user input is correct
+
+//verify input
     private boolean validateInputs() {
-        if (TextUtils.isEmpty(edtEmail.getText())) {
-            edtEmail.setError("Email is required");
-            return false;
-        }
-        if (TextUtils.isEmpty(edtUsername.getText())) {
-            edtUsername.setError("Username is required");
-            return false;
-        }
-        if (TextUtils.isEmpty(edtPassword.getText())) {
-            edtPassword.setError("Password is required");
+        if (!TextUtils.isEmpty(edtPassword.getText()) && edtPassword.getText().length() < 4) {
+            edtPassword.setError("Password must be at least 4 characters");
             return false;
         }
         return true;
     }
 
-    //update the new data to the firebase
-    private void updateUserData() {
-        String newEmail = edtEmail.getText().toString();
-        String newUsername = edtUsername.getText().toString();
-        String newPassword = edtPassword.getText().toString();
 
-        // Update email
-        firebaseUser.updateEmail(newEmail).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(getContext(), "Email updated", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Failed to update email", Toast.LENGTH_SHORT).show();
-            }
-        });
+    //upload new data to Firebase
+    private void updateUserData(String email) {
+        userRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    for (DataSnapshot userSnapshot : snapshot.getChildren()) {
+                        String newUsername = edtUsername.getText().toString();
+                        String newPassword = edtPassword.getText().toString();
 
-        // Update password
-        if (!TextUtils.isEmpty(newPassword)) {
-            firebaseUser.updatePassword(newPassword).addOnCompleteListener(task -> {
-                if (task.isSuccessful()) {
-                    Toast.makeText(getContext(), "Password updated", Toast.LENGTH_SHORT).show();
+                        // change username
+                        if (!TextUtils.isEmpty(newUsername)) {
+                            userSnapshot.getRef().child("username").setValue(newUsername);
+                        }
+
+                        // change code
+                        if (!TextUtils.isEmpty(newPassword)) {
+                            userSnapshot.getRef().child("password").setValue(newPassword);
+                        }
+
+                        Toast.makeText(getContext(), "User data updated successfully", Toast.LENGTH_SHORT).show();
+                    }
                 } else {
-                    Toast.makeText(getContext(), "Failed to update password", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Failed to find user data", Toast.LENGTH_SHORT).show();
                 }
-            });
-        }
+            }
 
-        // Update database
-        String userId = firebaseUser.getUid();
-        databaseReference.child(userId).child("username").setValue(newUsername).addOnCompleteListener(task -> {
-            if (task.isSuccessful()) {
-                Toast.makeText(getContext(), "User data updated", Toast.LENGTH_SHORT).show();
-            } else {
-                Toast.makeText(getContext(), "Failed to update user data", Toast.LENGTH_SHORT).show();
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(getContext(), "Failed to update user data: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

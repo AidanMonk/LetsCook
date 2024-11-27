@@ -31,10 +31,18 @@ public class UserProfile extends Base_activity {
     }
 
     // Method to replace the current fragment
+//    private void loadFragment(Fragment fragment) {
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction()
+//                .replace(R.id.userProfileFragmentContainer, fragment)
+//                .commit();
+//    }
+
     private void loadFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
                 .replace(R.id.userProfileFragmentContainer, fragment)
-                .commit();
+                .commitNow();
     }
+
 }
