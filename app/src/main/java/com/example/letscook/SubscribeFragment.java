@@ -77,7 +77,7 @@ public class SubscribeFragment extends Fragment {
 
     private void updateSubscriptionStatus(boolean isSubscribed) {
         if (userEmail == null) {
-            Toast.makeText(getContext(), "User not logged in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please login first", Toast.LENGTH_SHORT).show();
             return;
         }
 
