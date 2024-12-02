@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 
@@ -37,10 +36,10 @@ public class UserProfile extends Base_activity {
 
 
         // Set default fragment
-        loadFragment(new RecipeFragment());
+        loadFragment(new UserRecipesFragment());
 
         // Set button click listeners
-        btnRecipe.setOnClickListener(view -> loadFragment(new RecipeFragment()));
+        btnRecipe.setOnClickListener(view -> loadFragment(new UserRecipesFragment()));
         btnSetting.setOnClickListener(view -> loadFragment(new SettingFragment()));
         btnSubscribe.setOnClickListener(view -> loadFragment(new SubscribeFragment()));
     }
