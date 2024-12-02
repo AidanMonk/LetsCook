@@ -11,6 +11,7 @@
         android:layout_height="wrap_content"
         android:text="My Recipes"
         android:textSize="24sp"
+        android:textColor="@color/Tomato"
         android:textStyle="bold"
         android:gravity="center"
         android:layout_marginBottom="16dp" />

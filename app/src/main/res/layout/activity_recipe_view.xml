@@ -23,7 +23,8 @@
                 android:text="Recipe Name"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="@color/Tomato"/>
 
             <Space
                 android:layout_width="wrap_content"
@@ -37,7 +38,8 @@
                 android:text="rating: ☆☆☆☆☆"
                 android:textSize="16sp"
                 android:layout_weight="1"
-                android:layout_gravity="bottom" />
+                android:layout_gravity="bottom"
+                android:textColor="@color/Tomato"/>
 
         </LinearLayout>
 
@@ -84,7 +86,8 @@
             android:text="Ingredients"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/Tomato"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientsRecyclerView"

@@ -17,7 +17,8 @@
         android:layout_height="wrap_content"
         android:text="Featured Recipes"
         android:textSize="24sp"
-        android:layout_margin="20dp"/>
+        android:layout_margin="20dp"
+        android:textColor="@color/Tomato"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/featuredRecipesRecyclerView"
