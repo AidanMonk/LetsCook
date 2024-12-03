@@ -73,7 +73,7 @@ public class RecipeListAdapter extends RecyclerView.Adapter<RecipeListAdapter.Re
 
             recipeNameTV = itemView.findViewById(R.id.recipeNameTV);
             authorTV = itemView.findViewById(R.id.authorTV);
-            recipeImage = itemView.findViewById(R.id.myImageView);
+            recipeImage = itemView.findViewById(R.id.recipeImageView);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

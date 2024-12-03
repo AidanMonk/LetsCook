@@ -1,14 +1,15 @@
 package com.example.letscook.Models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
     private String username;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-
-
-
+    private List<String> recipes;
     private boolean isPremium;
 
     public User( String username,String firstName, String lastName, String email, String password){
@@ -17,9 +18,11 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        this.isPremium = false;
+        this.recipes = new ArrayList<>();
     }
 
-   public String getUsername() {
+    public String getUsername() {
         return username;
     }
 
@@ -66,4 +69,7 @@ public class User {
     public void setPremium(boolean premium) {
         isPremium = premium;
     }
+    public List<String> getRecipes() { return recipes; }
+    public void setRecipes(List<String> recipes) { this.recipes = recipes; }
 }
+

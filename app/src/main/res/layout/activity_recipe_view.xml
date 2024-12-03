@@ -23,7 +23,8 @@
                 android:text="Recipe Name"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="@color/Tomato"/>
 
             <Space
                 android:layout_width="wrap_content"
@@ -37,7 +38,8 @@
                 android:text="rating: ☆☆☆☆☆"
                 android:textSize="16sp"
                 android:layout_weight="1"
-                android:layout_gravity="bottom" />
+                android:layout_gravity="bottom"
+                android:textColor="@color/Tomato"/>
 
         </LinearLayout>
 
@@ -47,7 +49,6 @@
             android:layout_width="match_parent"
             android:layout_height="250dp"
             android:layout_marginBottom="16dp"
-            android:src="@drawable/coffeetest"
             android:scaleType="centerCrop"/>
 
         <TextView
@@ -56,7 +57,27 @@
             android:layout_height="wrap_content"
             android:text="Discover the perfect blend of flavors with this delightful recipe. Simple to prepare, it's a favorite for any occasion. Packed with wholesome ingredients, it’s sure to impress your family and friends. Follow the steps to create a dish that’s both delicious and memorable!"
             android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
+            android:layout_marginBottom="8dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Serves "
+                android:textSize="16sp"/>
+
+            <TextView
+                android:id="@+id/servingsET"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="10"
+                android:textSize="17sp"/>
+        </LinearLayout>
 
         <TextView
             android:id="@+id/ingredientsTitle"
@@ -65,7 +86,8 @@
             android:text="Ingredients"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/Tomato"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientsRecyclerView"
@@ -111,6 +133,7 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:numStars="5"
             android:stepSize="0.5"
             android:rating="0"
@@ -123,8 +146,122 @@
             android:text="Submit Rating"
             android:layout_marginTop="8dp" />
 
+        <!-- Nutrition facts -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginBottom="4dp">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nutrition facts"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginEnd="5dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="(per serving)"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/NutritionBlock"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="visible"
+            android:layout_marginBottom="16dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Calories"/>
+
+                <TextView
+                    android:id="@+id/caloriesTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="204"
+                    android:layout_weight="1"
+                    android:textSize="30dp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/fatTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Xg Fat"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/carbsTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Xg Carbs"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/proteinTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Xg Protein"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/fibreTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Xg Fibre"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/cholesterolTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Xg Cholesterol"
+                    android:layout_weight="1"/>
+                <TextView
+                    android:id="@+id/sodiumTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Xg Sodium"
+                    android:layout_weight="1"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/noNutritionTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sorry, Nutrition Values not available"
+            android:layout_marginBottom="16dp"
+            android:visibility="gone"/>
 
 
+
+        
     </LinearLayout>
 </ScrollView>
 

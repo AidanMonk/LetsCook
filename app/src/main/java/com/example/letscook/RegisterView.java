@@ -49,7 +49,7 @@ public class RegisterView extends AppCompatActivity {
 
         });
     }
-//In this validation , it make sure that all the fields entered are not empty + password matches
+    //In this validation , it make sure that all the fields entered are not empty + password matches
     private boolean validateInputs() {
         // Check if fields are empty
 
@@ -128,6 +128,8 @@ public class RegisterView extends AppCompatActivity {
 
     private void registerUser() {
         // Create a new user object with the input data
+        String emailStr = email.getText().toString().toLowerCase();
+        String emailKey = emailStr.replace(".", ",");
         User newUser = new User(
                 username.getText().toString().toLowerCase(),
                 firstName.getText().toString(),
@@ -137,7 +139,8 @@ public class RegisterView extends AppCompatActivity {
         );
 
         // Push the new user to the "users" collection
-        reference.push().setValue(newUser)
+        // reference.push().setValue(newUser)
+        reference.child(emailKey).setValue(newUser)
                 .addOnSuccessListener(aVoid -> {
                     Toast.makeText(RegisterView.this, "User registered successfully", Toast.LENGTH_SHORT).show();
                     startActivity(new Intent(RegisterView.this, LoginView.class));
@@ -147,3 +150,4 @@ public class RegisterView extends AppCompatActivity {
     }
 
 }
+
