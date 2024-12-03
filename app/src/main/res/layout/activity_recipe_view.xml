@@ -23,7 +23,8 @@
                 android:text="Recipe Name"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:textColor="@color/Tomato"/>
 
             <Space
                 android:layout_width="wrap_content"
@@ -37,7 +38,8 @@
                 android:text="rating: ☆☆☆☆☆"
                 android:textSize="16sp"
                 android:layout_weight="1"
-                android:layout_gravity="bottom" />
+                android:layout_gravity="bottom"
+                android:textColor="@color/Tomato"/>
 
         </LinearLayout>
 
@@ -84,7 +86,8 @@
             android:text="Ingredients"
             android:textSize="18sp"
             android:textStyle="bold"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="4dp"
+            android:textColor="@color/Tomato"/>
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/ingredientsRecyclerView"
@@ -117,6 +120,31 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"/>
+
+        <TextView
+            android:id="@+id/averageRatingText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Average Rating: 0.0"
+            android:textSize="16sp"
+            android:layout_marginTop="16dp" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:numStars="5"
+            android:stepSize="0.5"
+            android:rating="0"
+            android:layout_marginTop="8dp" />
+
+        <Button
+            android:id="@+id/submitRatingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Submit Rating"
+            android:layout_marginTop="8dp" />
 
         <!-- Nutrition facts -->
         <LinearLayout
@@ -232,18 +260,8 @@
             android:visibility="gone"/>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Reviews"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="16dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="comments would go here >>"/>
+        
     </LinearLayout>
 </ScrollView>
 

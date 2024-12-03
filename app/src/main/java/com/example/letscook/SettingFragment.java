@@ -57,7 +57,7 @@ public class SettingFragment extends Fragment {
         if (!TextUtils.isEmpty(loggedInEmail)) {
             loadUserData(loggedInEmail);
         } else {
-            Toast.makeText(getContext(), "No user logged in", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Please login first", Toast.LENGTH_SHORT).show();
         }
 
         // update user data
@@ -70,9 +70,10 @@ public class SettingFragment extends Fragment {
         return view;
     }
 
-//get user data from fire base
+    //get user data from fire base
     private void loadUserData(String email) {
-        userRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+        String emailKey = email.replace(",", "."); // transfer back to .
+        userRef.orderByChild("email").equalTo(emailKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -86,7 +87,7 @@ public class SettingFragment extends Fragment {
                         // renew UI
                         txtFirstName.setText(firstName != null ? firstName : "N/A");
                         txtLastName.setText(lastName != null ? lastName : "N/A");
-                        txtEmail.setText(email);
+                        txtEmail.setText(emailKey); // show actual email
                         txtPremiumStatus.setText(isPremium != null && isPremium ? "Premium User" : "Regular User");
                         edtUsername.setText(username != null ? username : "");
                     }
@@ -103,7 +104,8 @@ public class SettingFragment extends Fragment {
     }
 
 
-//verify input
+
+    //verify input
     private boolean validateInputs() {
         if (!TextUtils.isEmpty(edtPassword.getText()) && edtPassword.getText().length() < 4) {
             edtPassword.setError("Password must be at least 4 characters");
@@ -115,7 +117,8 @@ public class SettingFragment extends Fragment {
 
     //upload new data to Firebase
     private void updateUserData(String email) {
-        userRef.orderByChild("email").equalTo(email).addListenerForSingleValueEvent(new ValueEventListener() {
+        String emailKey = email.replace(",", "."); // Back to firebase ,
+        userRef.orderByChild("email").equalTo(emailKey).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if (snapshot.exists()) {
@@ -128,7 +131,7 @@ public class SettingFragment extends Fragment {
                             userSnapshot.getRef().child("username").setValue(newUsername);
                         }
 
-                        // change code
+                        // change password
                         if (!TextUtils.isEmpty(newPassword)) {
                             userSnapshot.getRef().child("password").setValue(newPassword);
                         }
@@ -146,4 +149,12 @@ public class SettingFragment extends Fragment {
             }
         });
     }
+
+
+
+
+
+
 }
+
+
