@@ -3,7 +3,9 @@ package com.example.letscook;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,6 +30,11 @@ public class RecipeView extends AppCompatActivity {
     RecyclerView ingredientsRecyclerView, stepsRecyclerView;
     RecipeIngredientAdapter2 recipeIngredientAdapter2;
     RecipeStepsAdapter2 recipeStepsAdapter2;
+
+    RatingBar ratingBar;
+    Button submitRatingButton;
+    TextView averageRatingText;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,10 +61,20 @@ public class RecipeView extends AppCompatActivity {
                         public void onError(Exception e) {
                             Log.d("RecipeView", "Image ID: " + recipe.getImageId());
                         }
+
+
                     });
                     setTextViews(recipe);
+
+                    averageRatingText.setText("Average Rating: " + recipe.getAverageRating());
+                    ratingBar.setRating(recipe.getAverageRating());
                 }
             }
+        });
+
+        submitRatingButton.setOnClickListener(v -> {
+            float rating = ratingBar.getRating();
+            submitRating(rating, recipeId);
         });
     }
 
@@ -75,11 +92,25 @@ public class RecipeView extends AppCompatActivity {
 
     }
 
+
+
+    private void submitRating(float rating, String recipeId) {
+        Database.updateRecipeRating(recipeId, rating);
+        Toast.makeText(this, "Rating submitted!", Toast.LENGTH_SHORT).show();
+    }
+
+
+
     private void initializeViews(){
         recipeName = findViewById(R.id.recipeName);
         recipeDesc = findViewById(R.id.recipeDesc);
         imagePreview = findViewById(R.id.imagePreview);
         ingredientsRecyclerView = findViewById(R.id.ingredientsRecyclerView);
         stepsRecyclerView = findViewById(R.id.stepsRecyclerView);
+
+
+        averageRatingText = findViewById(R.id.averageRatingText);
+        ratingBar = findViewById(R.id.ratingBar);
+        submitRatingButton = findViewById(R.id.submitRatingButton);
     }
 }
