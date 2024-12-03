@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -20,7 +21,9 @@ public class UserProfile extends Base_activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_user_profile);
+       // setContentView(R.layout.activity_user_profile);
+        getLayoutInflater().inflate(R.layout.activity_user_profile, findViewById(R.id.frame_layout));
+        EdgeToEdge.enable(this);
 
         // Initialize buttons
         btnRecipe = findViewById(R.id.btnRecipe);

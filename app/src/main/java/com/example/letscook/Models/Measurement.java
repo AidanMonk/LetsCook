@@ -4,6 +4,8 @@ public enum Measurement {
     CUPS,
     TBSP,
     TSP,
+    TEASPOONS,
+    TABLESPOONS,
     UNITS,
     LBS,
     G;
@@ -30,6 +32,9 @@ public enum Measurement {
                 return "units";
             case LBS:
                 return "lbs";
+            case TABLESPOONS:
+                return "tablespoons";
+            case TEASPOONS: return "teaspoons";
             case G:
                 return "g";
             default:
