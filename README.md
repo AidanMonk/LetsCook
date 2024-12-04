@@ -27,6 +27,8 @@ LetsCook is a user-friendly Android application designed for food enthusiasts. I
 
 ![Add New Recipes](https://github.com/user-attachments/assets/d06d4113-89e4-4edd-af54-57d2eb293c3b)  
 
+![Add New Recipes](https://github.com/user-attachments/assets/da68c113-37e0-474c-9943-22a0ab8a7a0d)(![Screenshot 2024-12-04 115926](https://github.com/user-attachments/assets/f03f8e6f-0c97-4b0b-9e9c-a18e199372bb)
+
 ---
 
 ## **Tech Stack**  
