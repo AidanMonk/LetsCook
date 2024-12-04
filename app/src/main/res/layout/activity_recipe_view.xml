@@ -125,7 +125,7 @@
             android:id="@+id/averageRatingText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Average Rating: 0.0"
+            android:text="Average curent Rating: 0.0"
             android:textSize="16sp"
             android:layout_marginTop="16dp" />
 
@@ -143,7 +143,7 @@
             android:id="@+id/submitRatingButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Liked it? Submit Rating"
+            android:text="Liked it? Submit your Rating"
             android:layout_marginTop="8dp" />
 
         <!-- Nutrition facts -->
@@ -156,7 +156,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nutrition facts"
-                android:textSize="18sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 android:layout_marginEnd="5dp"/>
             <TextView
