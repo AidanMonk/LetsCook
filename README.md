@@ -18,7 +18,10 @@ LetsCook is a user-friendly Android application designed for food enthusiasts. I
 
 ### 2. **Featured Recipes Page**  
 - **Explore Recipes**: Discover a curated list of featured recipes from different cuisines.  
-- **Recipe Details**: View detailed information about each recipe, including ingredients and steps.  
+- **Recipe Details**: View detailed information about each recipe, including ingredients and steps.
+
+  ![Screenshot 2024-12-04 120402](https://github.com/user-attachments/assets/88356f7c-aa2d-4b62-9ea8-bc8f8e401485)
+
 
 ---
 
