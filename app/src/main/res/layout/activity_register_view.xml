@@ -4,119 +4,117 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
-<LinearLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="20dp">
-<!--    android:background="@drawable/gradient_background"-->
 
-    <TextView
-        android:layout_height="wrap_content"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:textSize="50dp"
-        android:text="Register"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textColor="@color/Tomato"
-        />
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="30dp"
-        android:layout_marginTop="20dp"
-        android:text="First Name" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <EditText
-        android:id="@+id/edtFirstName"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="30dp"
-        android:hint="Enter your First Name"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:textSize="40sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:textColor="@color/Tomato" />
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Last Name"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="First Name"
+            android:textSize="25sp"
+            android:layout_marginTop="20dp" />
 
-    <EditText
-        android:id="@+id/edtLastName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:hint="Enter your Last Name"/>
+        <EditText
+            android:id="@+id/edtFirstName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your First Name"
+            android:textSize="20sp" />
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Email" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Last Name"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
 
-    <EditText
-        android:id="@+id/edtEmail"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="30dp"
-        android:hint="Enter your email"
-        android:inputType="textEmailAddress"/>
+        <EditText
+            android:id="@+id/edtLastName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Last Name"
+            android:textSize="20sp" />
 
-    <!--    password textview and edittext-->
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Password"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Email"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
 
-    <EditText
-        android:id="@+id/edtpassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:hint="Enter your Password"
-        android:inputType="textPassword"/>
+        <EditText
+            android:id="@+id/edtEmail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your email"
+            android:inputType="textEmailAddress"
+            android:textSize="20sp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Password"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Confirm Password"/>
+        <EditText
+            android:id="@+id/edtpassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your Password"
+            android:inputType="textPassword"
+            android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/edtConfirmPassword"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:hint="Confirm your Password"
-        android:inputType="textPassword"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Confirm Password"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
 
-    <TextView
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:textSize="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Username"/>
+        <EditText
+            android:id="@+id/edtConfirmPassword"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Confirm your Password"
+            android:inputType="textPassword"
+            android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/edtUsernameR"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:hint="Enter your username"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Username"
+            android:textSize="25sp"
+            android:layout_marginTop="10dp" />
 
+        <EditText
+            android:id="@+id/edtUsernameR"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter your username"
+            android:textSize="20sp" />
 
-    <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:layout_marginTop="30dp"
-        android:text="Register"/>
+        <Button
+            android:id="@+id/btnRegister"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Register"
+            android:backgroundTint="@color/DarkOrange"
+            android:textSize="20sp"
+            android:layout_marginTop="30dp" />
 
-</LinearLayout>
+    </LinearLayout>
 </ScrollView>

@@ -323,7 +323,6 @@ public class CreateRecipe extends Base_activity {
 
             quantityET.setText("");
             ingredientET.setText("");
-            measurementSpinner.setSelection(0);
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Quantity must be input", Toast.LENGTH_SHORT).show();
         } catch (InvalidRecipeIngredientException e) {

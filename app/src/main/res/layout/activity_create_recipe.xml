@@ -168,6 +168,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_background"
             android:padding="5dp"
+            android:layout_marginBottom="5dp"
             android:textColor="#333333"
             android:textSize="16sp"
             android:inputType="text"/>
@@ -178,7 +179,7 @@
             android:layout_height="wrap_content"
             android:text="add ingredient"
             android:backgroundTint="@color/DarkOrange"
-            android:textColor="@color/white" />
+            android:textColor="@color/white"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -198,6 +199,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/edittext_background"
             android:padding="5dp"
+            android:layout_marginBottom="5dp"
             android:textColor="#333333"
             android:textSize="16sp"
             android:inputType="textMultiLine"/>
@@ -206,6 +208,7 @@
             android:id="@+id/addStepBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/DarkOrange"
             android:layout_marginBottom="10dp"
             android:text="add step" />
 
@@ -229,6 +232,7 @@
                     android:id="@+id/recipeCategorySpinner"
                     android:layout_width="200dp"
                     android:layout_height="30dp"
+                    android:layout_marginBottom="10dp"
                     />
             </LinearLayout>
         </LinearLayout>
@@ -314,12 +318,15 @@
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:scaleType="centerCrop"
+            android:layout_marginBottom="5dp"
             android:visibility="gone"/>
 
         <Button
             android:id="@+id/addImageBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:backgroundTint="@color/DarkOrange"
+            android:layout_marginBottom="10dp"
             android:text="add image"/>
 
         <Button
@@ -327,6 +334,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="add recipe"
+            android:backgroundTint="@color/DarkOrange"
             android:layout_gravity="center"
             android:layout_marginBottom="100dp"/>
 

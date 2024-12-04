@@ -137,7 +137,7 @@ public class LoginView extends AppCompatActivity {
                                     Toast.makeText(LoginView.this, "Login successful", Toast.LENGTH_SHORT).show();
 
                                     // Navigate to the main screen
-                                    startActivity(new Intent(LoginView.this, CreateRecipe.class)); // Update to your main activity
+                                    startActivity(new Intent(LoginView.this, FeaturedView.class)); // Update to your main activity
                                     finish();
                                 } else {
                                     Log.e("LoginView", "Password does not match");
