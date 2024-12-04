@@ -90,6 +90,38 @@ public class Database {
         });
     }
 
+    public static void updateRecipeRating(String recipeId, float newRating) {
+        recipesRef.child(recipeId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    Recipe recipe = snapshot.getValue(Recipe.class);
+                    if (recipe != null) {
+                        // Calculate new average rating
+                        int currentCount = recipe.getRatingCount();
+                        float currentAverage = recipe.getAverageRating();
+                        float totalRating = (currentAverage * currentCount) + newRating;
+                        currentCount++;
+                        float updatedAverage = totalRating / currentCount; // new average rating
+
+                        // Update recipe with new average and count
+                        recipe.setAverageRating(updatedAverage);
+                        recipe.setRatingCount(currentCount);
+                        recipesRef.child(recipeId).setValue(recipe); // Update in database
+                    }
+                } else {
+                    Log.e("DatabaseError", "Recipe not found for ID: " + recipeId);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Log.e("DatabaseError", "Error updating rating: " + error.getMessage());
+            }
+        });
+    }
+
+
     public static void getImageUrl(String imageId, UrlCallback callback) {
         storageRef = FirebaseStorage.getInstance().getReference("recipe_images/" + imageId + ".png");
 

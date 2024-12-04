@@ -5,57 +5,65 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:layout_gravity="center">
+    android:layout_gravity="center"
+    android:layout_margin="20dp">
 
     <TextView
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:textSize="30dp"
-        android:gravity="center"
-        android:text="Username" />
+        android:layout_height="wrap_content"
+        android:text="Username"
+        android:textSize="30sp"
+        android:gravity="center" />
 
     <EditText
         android:id="@+id/edtEmailL"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:textSize="30dp"
+        android:layout_height="wrap_content"
         android:hint="Enter your email"
-        android:inputType="textEmailAddress"/>
+        android:textSize="20sp"
+        android:inputType="textEmailAddress" />
 
-    <!--    password textview and edittext-->
     <TextView
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:textSize="30dp"
+        android:layout_height="wrap_content"
+        android:text="Password"
+        android:textSize="30sp"
         android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="Password" />
+        android:layout_marginTop="30dp" />
 
     <EditText
         android:id="@+id/edtpasswordL"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:textSize="30dp"
+        android:layout_height="wrap_content"
         android:hint="Enter your Password"
-        android:inputType="textPassword"/>
+        android:textSize="20sp"
+        android:inputType="textPassword" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:layout_marginTop="40dp" />
 
     <Button
         android:id="@+id/btnlogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="30dp"
-        android:layout_marginTop="40dp"
-        android:text="Login"/>
+        android:text="Login"
+        android:textSize="30sp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="20dp"
+        android:backgroundTint="@color/DarkOrange"
+        android:textColor="@color/white" />
 
     <TextView
         android:id="@+id/txtSignUp"
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:textSize="30dp"
+        android:layout_height="wrap_content"
+        android:text="Sign Up"
+        android:textSize="18sp"
         android:textStyle="italic"
         android:textColor="@color/blue"
-        android:gravity="center"
-        android:layout_marginTop="30dp"
-        android:text="SignUp"/>
+        android:gravity="center" />
 
 </LinearLayout>

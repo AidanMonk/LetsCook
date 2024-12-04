@@ -33,9 +33,12 @@ import com.example.letscook.Models.IngredientCategory;
 import com.example.letscook.Models.Measurement;
 import com.example.letscook.Models.Recipe;
 import com.example.letscook.Models.RecipeIngredient;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.example.letscook.Models.RecipeCategory;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -110,7 +113,22 @@ public class CreateRecipe extends Base_activity {
 
         // Add recipe button
         addRecipeBtn.setOnClickListener(v -> {
-            try {
+            String emailKey = sharedPreferences.getString(LoginView.KEY_EMAIL, "").replace(".", ",");
+            boolean isPremium = sharedPreferences.getBoolean(LoginView.KEY_PREMIUM, false);
+
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("users").child(emailKey);
+
+            // Check if user has more than one recipe if not premium
+            userRef.child("recipes").addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    long recipeCount = dataSnapshot.getChildrenCount();
+
+                    if (!isPremium && recipeCount >=2) {
+                        Toast.makeText(CreateRecipe.this, "Only premium users can create more than one recipe.", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        try {
                 String recipeName = recipeNameET.getText().toString();
                 String recipeDesc = recipeDescET.getText().toString();
                 String author = sharedPreferences.getString(LoginView.KEY_USERNAME, "unknown");
@@ -118,7 +136,7 @@ public class CreateRecipe extends Base_activity {
                 // shared ref
                 // Retrieve current user details
                 String username = sharedPreferences.getString(LoginView.KEY_USERNAME, "unknown");
-               // boolean isPremium = sharedPreferences.getBoolean(LoginView.KEY_PREMIUM, false);
+                boolean isPremium = sharedPreferences.getBoolean(LoginView.KEY_PREMIUM, false);
                 String emailKey = sharedPreferences.getString(LoginView.KEY_EMAIL, "").replace(".", ",");
 
                 int servingSize = Integer.parseInt(servingsET.getText().toString());
@@ -160,10 +178,20 @@ public class CreateRecipe extends Base_activity {
 
             } catch (InvalidRecipeNameException | InvalidRecipeDescException | InvalidDietaryException|
                      InvalidRecipeIngredientException | InvalidRecipeStepException e) {
-                Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(CreateRecipe.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             } catch (Exception e) {
-                Toast.makeText(this, "An unexpected error occurred.", Toast.LENGTH_SHORT).show();
-            }
+                Toast.makeText(CreateRecipe.this, "An unexpected error occurred.", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+                    // Handle possible errors.
+                    Toast.makeText(CreateRecipe.this, "Failed to check recipe count.", Toast.LENGTH_SHORT).show();
+                }
+            });
+
         });
     }
 
@@ -295,7 +323,6 @@ public class CreateRecipe extends Base_activity {
 
             quantityET.setText("");
             ingredientET.setText("");
-            measurementSpinner.setSelection(0);
         } catch (NumberFormatException e) {
             Toast.makeText(this, "Quantity must be input", Toast.LENGTH_SHORT).show();
         } catch (InvalidRecipeIngredientException e) {

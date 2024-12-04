@@ -36,7 +36,7 @@ public class LoginView extends AppCompatActivity {
     public static final String KEY_FIRST_NAME = "firstName";
     public static final String KEY_LAST_NAME = "lastName";
     public static final String KEY_EMAIL = "email";
-    //public static final String KEY_PREMIUM = "premium";
+    public static final String KEY_PREMIUM = "premium";
 
 
     @Override
@@ -130,13 +130,14 @@ public class LoginView extends AppCompatActivity {
                                     editor.putString(KEY_FIRST_NAME, firstName);
                                     editor.putString(KEY_LAST_NAME, lastName);
                                     editor.putString(KEY_EMAIL, email.replace(".", ",")); // Replace "." for Firebase compatibilit
+                                    editor.putBoolean(KEY_PREMIUM, isPremium);
                                     editor.apply();
 
                                     Log.d("LoginView", "Login successful, moving to main screen");
                                     Toast.makeText(LoginView.this, "Login successful", Toast.LENGTH_SHORT).show();
 
                                     // Navigate to the main screen
-                                    startActivity(new Intent(LoginView.this, CreateRecipe.class)); // Update to your main activity
+                                    startActivity(new Intent(LoginView.this, FeaturedView.class)); // Update to your main activity
                                     finish();
                                 } else {
                                     Log.e("LoginView", "Password does not match");

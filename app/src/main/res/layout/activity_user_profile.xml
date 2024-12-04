@@ -52,7 +52,7 @@
                 android:id="@+id/userTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="User Title (Head chef/Junior chef)"
+                android:text="User Title: Head chef"
                 android:textSize="14sp"
                 android:textColor="#808080" />
         </LinearLayout>

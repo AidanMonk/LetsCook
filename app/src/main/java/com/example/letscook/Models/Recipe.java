@@ -21,6 +21,9 @@ public class Recipe {
     private int servings;
     private NutritionalInfo nutritionalInfo;
 
+    private float averageRating;
+    private int ratingCount;
+
     public Recipe(){}
 
     public Recipe(String name, String author, String description, List<RecipeIngredient> ingredients, List<String> steps, RecipeCategory recipeCategory , List<String> dietaryCategory, int servings, NutritionalInfo nutritionalInfo){
@@ -33,8 +36,12 @@ public class Recipe {
         this.steps = steps;
         this.recipeCategory = recipeCategory;
         this.dietaryCategory = dietaryCategory;
+        this.averageRating = 0.0f;
+        this.ratingCount = 0;
+
         this.servings = servings;
         this.nutritionalInfo = nutritionalInfo;
+
     }
 
     public String getId() {
@@ -108,6 +115,27 @@ public class Recipe {
     public List<String> getDietaryCategory() {return dietaryCategory;}
 
     public void setDietaryCategory(List<String> dietaryCategory) {this.dietaryCategory = dietaryCategory;}
+
+
+    public float getAverageRating() {
+        return averageRating;
+    }
+
+
+    public int getRatingCount() {
+        return ratingCount;
+    }
+
+
+    public void setAverageRating(float averageRating) {
+        this.averageRating = averageRating;
+    }
+
+
+    public void setRatingCount(int ratingCount) {
+        this.ratingCount = ratingCount;
+    }
+
 
 }
 
