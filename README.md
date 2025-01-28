@@ -28,7 +28,7 @@ LetsCook is a user-friendly Android application designed for food enthusiasts. I
   
 ---
 
-- **Leave user reviews and calculate calorie information**: Users can leave reviews, and an API can fetch calorie.
+- **Leave user reviews and calculate calorie information**: Users can leave reviews, and an API can fetch calorie info.
   ![view2](https://github.com/user-attachments/assets/69a960b6-6b13-4722-a0f1-640be94d0a0f)
 
 ---
